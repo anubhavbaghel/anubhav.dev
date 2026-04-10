@@ -9,7 +9,7 @@ function hexToLuminance(hex) {
   return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]
 }
 
-export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style }) {
+export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children }) {
   const luminance = hexToLuminance(color)
   const textColor = luminance > 0.5 ? '#111' : '#fff'
 
@@ -27,6 +27,7 @@ export default function Tile({ title, subtitle, color = '#444', size = 'small', 
         {/* placeholder icon - replace with SVG or image */}
       </div>
       {/* title/subtitle intentionally omitted — tiles show no text */}
+      {children ? <div className="tile-content">{children}</div> : null}
     </div>
   )
 }

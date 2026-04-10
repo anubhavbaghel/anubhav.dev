@@ -44,6 +44,9 @@ export default function App() {
         <main className="main-area">
           <section className="tiles-layout">
             {tiles.map((t) => {
+              if (t.id === 't1') {
+                return <Tile key={t.id} color={t.color}><span>Hello</span></Tile>
+              }
               if (t.id === 't3') {
                 return (
                   <div key="right-nested" className="nested-grid-wrapper" style={{ gridColumn: '3', gridRow: 'span 2' }}>

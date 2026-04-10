@@ -1,7 +1,23 @@
 :root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px }
 * { box-sizing: border-box }
-/* Use Segoe UI first for Metro feel, fall back to Manrope/system fonts */
-body { font-family: 'Segoe UI', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; background:var(--bg); color: #111; background-image: none; }
+/* Host Grotesk local font (extracted from Host_Grotesk.zip into public/fonts/) */
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('/fonts/HostGrotesk-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('/fonts/static/HostGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* keep Poppins as a fallback from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; background:var(--bg); color: #111; background-image: none; }
 .app-root { padding: 56px 0 0; min-height: 100vh }
 .app-header { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: transparent; color: #fff; display: flex; align-items: center; padding: 0 20px; z-index: 50 }
 .app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
@@ -42,6 +58,13 @@ body { font-family: 'Segoe UI', 'Manrope', system-ui, -apple-system, 'Segoe UI',
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
 .tile-title { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px }
 .tile-sub { margin-top: 6px; color: inherit; opacity: 0.9; font-size: 0.95rem }
+
+/* custom content inside a tile (used for big HELLO text) */
+.tile-content { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; z-index: 2; pointer-events: none; padding: 12px }
+.tile-content > * { display: block; width: 100%; max-width: 100%; font-weight: 800; line-height: 1; text-transform: none; white-space: normal; overflow-wrap: break-word; /* responsive font that fits tile */
+  font-size: clamp(1rem, 6vw, 3.6rem);
+  font-family: 'Poppins', 'Die Grotesk', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
 
 /* subtle hover lift */
 .tile:hover { /* no movement - image will change on hover */ }
