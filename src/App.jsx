@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Tile from './components/Tile'
+import LoadingScreen from './components/LoadingScreen'
 import './index.css'
 
 // Minimal App: render exactly 9 Tile components and nothing else
@@ -16,10 +17,10 @@ export default function App() {
 
   // tiles for the nested 2x2 area (they will share the same gap)
   const nested = [
-    { id: 'n1', title: 'Photos', color: '#8AD4FF' },
-    { id: 'n2', title: 'Notes', color: '#FFD36B' },
-    { id: 'n3', title: 'Tasks', color: '#FFB3B3' },
-    { id: 'n4', title: 'News', color: '#C8A2FF' },
+    { id: 'n1', title: 'React', color: '#8AD4FF' },
+    { id: 'n2', title: 'Javascript', color: '#F0DB4F' },
+    { id: 'n3', title: 'Wordpress', color: '#FFB3B3' },
+    { id: 'n4', title: 'Shopify', color: '#C8A2FF' },
   ]
 
   // right-scroller live tiles (dynamic metro shapes)
@@ -119,6 +120,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <LoadingScreen />
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
           <section className="tiles-layout">
@@ -139,9 +141,16 @@ export default function App() {
                 return (
                   <div key="right-nested" className="nested-grid-wrapper" style={{ gridColumn: '3', gridRow: 'span 2' }}>
                     <div className="nested-grid">
-                      {nested.map((n) => (
-                        <Tile key={n.id} title={n.title} color={n.color} />
-                      ))}
+                      {nested.map((n) => {
+                        if (n.id === 'n2') {
+                          return (
+                            <Tile key={n.id} title={n.title} color={n.color}>
+                              <div className="tile-bottom-right tile-bottom-right--big" aria-hidden>JS</div>
+                            </Tile>
+                          )
+                        }
+                        return <Tile key={n.id} title={n.title} color={n.color} />
+                      })}
                     </div>
                   </div>
                 )
