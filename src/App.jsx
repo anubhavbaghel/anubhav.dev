@@ -84,17 +84,44 @@ if (typeof window !== 'undefined') {
     const el = document.getElementById('layoutOuter')
     if (!el) return
 
+    // smooth scroll animator using requestAnimationFrame
+    let target = el.scrollLeft
+    let isRunning = false
+
+    const animate = () => {
+      if (!isRunning) return
+      const current = el.scrollLeft
+      const dist = target - current
+      // gentler easing for a smoother feel
+      const delta = dist * 0.08
+      if (Math.abs(dist) < 0.3) {
+        el.scrollLeft = target
+        isRunning = false
+        return
+      }
+      el.scrollLeft = current + delta
+      requestAnimationFrame(animate)
+    }
+
     const handler = (e) => {
+      // only intercept when vertical intent is stronger
       if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return
       e.preventDefault()
-      el.scrollLeft += e.deltaY
+      const max = el.scrollWidth - el.clientWidth
+      // accumulate target with a gentler multiplier
+      target = Math.max(0, Math.min(max, target + e.deltaY * 1.2))
+      if (!isRunning) {
+        isRunning = true
+        requestAnimationFrame(animate)
+      }
     }
 
     const matchesDesktop = () => window.matchMedia('(pointer: fine) and (min-width: 900px)').matches
 
     const update = () => {
-      // remove first to avoid duplicate listeners
       el.removeEventListener('wheel', handler)
+      // reset target to current scroll position to avoid jumps
+      target = el.scrollLeft
       if (matchesDesktop()) el.addEventListener('wheel', handler, { passive: false })
     }
 
