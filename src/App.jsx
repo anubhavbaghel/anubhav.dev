@@ -11,7 +11,7 @@ export default function App() {
     // this entry becomes the large area on the right that will contain a nested 2x2 grid
     { id: 't3', title: 'Right Group', color: '#00B9FF' },
     { id: 't7', title: 'Maps', color: '#6A00FF' },
-    { id: 't8', title: 'OneDrive', color: '#2B6CB0' },
+    { id: 't8', title: 'Socials', color: '#2B6CB0' },
     { id: 't9', title: 'Messaging', color: '#D400CC' },
   ]
 
@@ -185,6 +185,41 @@ export default function App() {
 
                         return <Tile key={n.id} title={n.title} color={n.color} />
                       })}
+                    </div>
+                  </div>
+                )
+              }
+
+              if (t.id === 't8') {
+                return (
+                  <div key={t.id} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <Tile key={`${t.id}-a`} title={'Socials'} color={'#1DA1F2'}>
+                      {/* Socials content placeholder */}
+                    </Tile>
+                    <div
+                      key={`${t.id}-b`}
+                      className="tile"
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gridTemplateRows: '1fr 1fr',
+                        gap: 'var(--tile-gap)',
+                        padding: 0,
+                        background: 'transparent',
+                      }}
+                    >
+                      <div key={`${t.id}-b-1`} className="tile" style={{ background: '#1DA1F2', padding: 0 }}>
+                        <div className="tile-center-logo" aria-hidden>🐦</div>
+                      </div>
+                      <div key={`${t.id}-b-2`} className="tile" style={{ background: '#24292e', padding: 0 }}>
+                        <div className="tile-center-logo" aria-hidden>🐙</div>
+                      </div>
+                      <div key={`${t.id}-b-3`} className="tile" style={{ background: '#0A66C2', padding: 0 }}>
+                        <div className="tile-center-logo" aria-hidden>in</div>
+                      </div>
+                      <div key={`${t.id}-b-4`} className="tile" style={{ background: '#D44638', padding: 0 }}>
+                        <div className="tile-center-logo" aria-hidden>@</div>
+                      </div>
                     </div>
                   </div>
                 )
