@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
 :root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32 }
 * { box-sizing: border-box }
 /* Host Grotesk local font (extracted from Host_Grotesk.zip into public/fonts/) */
@@ -15,9 +18,31 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Neue Haas Display local fonts (extracted into public/fonts/neue-haas/) */
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('/fonts/neue-haas/NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('/fonts/neue-haas/NeueHaasDisplayMediu.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('/fonts/neue-haas/NeueHaasDisplayBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /* keep Poppins as a fallback from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; color: #111;
+body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; font-weight: 500; color: #111;
   /* Layered CSS landscape: sky, sun, distant mountains and foreground grass */
   background-color: var(--sky-bottom);
   background-image:
@@ -74,15 +99,16 @@ body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui,
 
 /* custom content inside a tile (used for big HELLO text) */
 .tile-content { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; z-index: 2; pointer-events: none; padding: 12px }
-.tile-content > * { display: block; width: 100%; max-width: 100%; font-weight: 600; line-height: 1; text-transform: none; white-space: normal; overflow-wrap: break-word; /* responsive font that fits tile */
+.tile-content > * { display: block; width: 100%; max-width: 100%; line-height: 1; text-transform: none; white-space: normal; overflow-wrap: break-word; /* responsive font that fits tile */
   font-size: clamp(1.2rem, 8vw, 4.2rem);
-  font-family: 'Poppins', 'Die Grotesk', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Die Grotesk', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
 }
 
 /* Vertical sliding word rotator used below the name in the big tile */
 .vertical-slider { height: 28px; overflow: hidden; margin-top: 6px }
 .vertical-slider ul { list-style: none; margin: 0; padding: 0; display: block; will-change: transform }
-.vertical-slider li { height: 28px; line-height: 1; display: block; font-size: inherit; font-weight: 700; white-space: nowrap }
+.vertical-slider li { height: 28px; line-height: 1; display: block; font-size: inherit; font-weight: 500; white-space: nowrap; font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif }
 .vertical-slider { /* ensure the container doesn't collapse when font-size is large */ }
 
 /* discrete step animation: show each word, hold, then jump to next (no smooth scrolling) */
@@ -93,7 +119,15 @@ body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui,
 /* 9 steps including duplicate first item for seamless loop */
 .role-rotator { margin-top: 8px; overflow: hidden }
 .role-rotator ul { list-style: none; margin: 0; padding: 0; transform: translateY(0); }
-.role-rotator .role-item { font-weight: 600; font-size: inherit; line-height: 1.5; display: block; padding: 0; margin: 0; color: #000 }
+.role-rotator .role-item { font-weight: 500; font-size: inherit; line-height: 1.5; display: block; padding: 0; margin: 0; color: #000; font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif }
+
+/* Ensure other list items inside tiles use Neue Haas Medium */
+.tile-content ul li,
+.tile-content ol li,
+.role-rotator li {
+  font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+}
 
 /* animation: hold first for 1.5s, smooth upward slide (0.6s), hold second for 1.5s, smooth slide back (0.6s) */
 @keyframes role-swap {

@@ -128,7 +128,7 @@ export default function App() {
                   <Tile key={t.id} color={t.color} style={{ gridColumn: '1 / span 2', gridRow: '1 / span 2' }}>
                     <div>
                       <span>Hello</span>
-                      <div style={{ color: '#000', marginTop: 8, fontWeight: 600 }}>I’m Anubhav Baghel</div>
+                      <div style={{ color: '#000', marginTop: 8, fontWeight: 500 }}>I’m Anubhav Baghel</div>
 
                       <RoleRotator items={["Developer", "Problem Solver", "Builder", "Strategist", "Navigator", "Thinker", "Debugger"]} hold={1500} slide={600} />
                     </div>
