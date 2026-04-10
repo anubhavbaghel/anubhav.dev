@@ -116,7 +116,58 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile-bottom-right--big { font-size: clamp(6rem, 3.8vw, 1.6rem); font-weight: 700; padding: 0px; letter-spacing: 0.6px }
 
 @media (max-width: 920px) {
+  .tile-bottom-right { width: 88px; right: 10px; bottom: 10px; font-size: 0.85rem; padding: 4px }
   .tile-bottom-right--big { width: 64px; font-size: 1.1rem; padding: 6px }
+}
+
+/* image + label inside bottom-right container */
+.tile-bottom-right img { width: 40px; height: 40px; display: block }
+.tile-bottom-right--big img { width: 56px; height: 56px }
+.tile-bottom-right .react-label { display: block; margin-top: 6px; font-size: 0.85rem; font-weight: 700; color: inherit }
+
+/* center a logo inside a tile */
+.tile-center-logo { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 4; pointer-events: none }
+.tile-center-logo img { width: 65%; height: 65%; display: block; position: relative; z-index: 5 }
+
+@media (max-width: 920px) {
+  .tile-center-logo img { width: 56px; height: 56px }
+}
+
+/* force Wordpress SVG to render black when used as an <img> */
+.tile-center-logo img[src*="Wordpress-Logo.svg"] {
+  /* make the Wordpress SVG appear white on dark background */
+  filter: invert(1) brightness(200%);
+}
+
+/* Hover: slide white overlay from bottom and tint Wordpress SVG blue */
+.tile { position: relative }
+.tile .tile-center-logo { transition: transform 360ms ease }
+.tile.tile--slide::after { /* sliding white overlay */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  background: transparent;
+  transform: translateY(100%);
+  transition: transform 360ms ease;
+  z-index: 1;
+}
+.tile.tile--slide:hover::after { transform: translateY(0%); background: #ffffff }
+.tile.tile--slide:hover .tile-center-logo img[src*="Wordpress-Logo.svg"] {
+  /* approximate Wordpress blue tint */
+  filter: invert(31%) sepia(45%) saturate(500%) hue-rotate(160deg) brightness(92%) contrast(92%);
+}
+.tile.tile--slide:hover .tile-center-logo { transform: none }
+
+/* Rotate React svg 90deg on hover (scoped to the slide tiles) */
+.tile.tile--slide .tile-center-logo img[src*="React-icon.svg"] {
+  transition: transform 360ms ease;
+  transform-origin: center center;
+}
+.tile.tile--slide:hover .tile-center-logo img[src*="React-icon.svg"] {
+  transform: rotate(90deg);
 }
 
 /* Right-side logo container inside a tile (used for React logo in the big tile) */

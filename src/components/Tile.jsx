@@ -9,12 +9,12 @@ function hexToLuminance(hex) {
   return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]
 }
 
-export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children }) {
+export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children, className = '' }) {
   const luminance = hexToLuminance(color)
   const textColor = luminance > 0.5 ? '#111' : '#fff'
 
   return (
-    <div className={`tile ${size}`} style={{ background: color, color: textColor, ...(typeof style === 'object' ? style : {}) }}>
+    <div className={`tile ${size} ${className}`.trim()} style={{ background: color, color: textColor, ...(typeof style === 'object' ? style : {}) }}>
       {image ? (
         <div className="tile-image" style={{ backgroundImage: `url(${image})` }} />
       ) : null}

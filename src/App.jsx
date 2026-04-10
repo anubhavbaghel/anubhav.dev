@@ -142,13 +142,44 @@ export default function App() {
                   <div key="right-nested" className="nested-grid-wrapper" style={{ gridColumn: '3', gridRow: 'span 2' }}>
                     <div className="nested-grid">
                       {nested.map((n) => {
+                        if (n.id === 'n1') {
+                          return (
+                            <Tile key={n.id} title={n.title} color={'#ffffff'} className="tile--slide">
+                              <div className="tile-center-logo" aria-hidden>
+                                <img src={'/assets/React-icon.svg'} alt="React" />
+                              </div>
+                            </Tile>
+                          )
+                        }
+
                         if (n.id === 'n2') {
                           return (
-                            <Tile key={n.id} title={n.title} color={n.color}>
+                            <Tile key={n.id} title={n.title} color={n.color} className="tile--slide">
                               <div className="tile-bottom-right tile-bottom-right--big" aria-hidden>JS</div>
                             </Tile>
                           )
                         }
+
+                        if (n.id === 'n3') {
+                          return (
+                            <Tile key={n.id} title={n.title} color={'#000000'} className="tile--slide">
+                              <div className="tile-center-logo" aria-hidden>
+                                <img src={'/assets/Wordpress-Logo.svg'} alt="Wordpress" />
+                              </div>
+                            </Tile>
+                          )
+                        }
+
+                        if (n.id === 'n4') {
+                          return (
+                            <Tile key={n.id} title={n.title} color={'#96BF48'} className="tile--slide">
+                              <div className="tile-center-logo" aria-hidden>
+                                <img src={'/assets/shopify/shopify_glyph_black.svg'} alt="Shopify" />
+                              </div>
+                            </Tile>
+                          )
+                        }
+
                         return <Tile key={n.id} title={n.title} color={n.color} />
                       })}
                     </div>
