@@ -56,13 +56,13 @@ body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui,
 .tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end }
 .tile .tile-icon { position: absolute; left: 12px; top: 12px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.95 }
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
-.tile-title { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px }
-.tile-sub { margin-top: 6px; color: inherit; opacity: 0.9; font-size: 0.95rem }
+.tile-title { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2px }
+.tile-sub { margin-top: 6px; color: inherit; opacity: 0.95; font-size: 1rem; font-weight: 600 }
 
 /* custom content inside a tile (used for big HELLO text) */
 .tile-content { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; z-index: 2; pointer-events: none; padding: 12px }
-.tile-content > * { display: block; width: 100%; max-width: 100%; font-weight: 800; line-height: 1; text-transform: none; white-space: normal; overflow-wrap: break-word; /* responsive font that fits tile */
-  font-size: clamp(1rem, 6vw, 3.6rem);
+.tile-content > * { display: block; width: 100%; max-width: 100%; font-weight: 600; line-height: 1; text-transform: none; white-space: normal; overflow-wrap: break-word; /* responsive font that fits tile */
+  font-size: clamp(1.2rem, 8vw, 4.2rem);
   font-family: 'Poppins', 'Die Grotesk', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
