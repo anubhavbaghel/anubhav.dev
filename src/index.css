@@ -1,4 +1,4 @@
-:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px }
+:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32 }
 * { box-sizing: border-box }
 /* Host Grotesk local font (extracted from Host_Grotesk.zip into public/fonts/) */
 @font-face {
@@ -17,7 +17,20 @@
 }
 /* keep Poppins as a fallback from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; background:var(--bg); color: #111; background-image: none; }
+body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; color: #111;
+  /* Layered CSS landscape: sky, sun, distant mountains and foreground grass */
+  background-color: var(--sky-bottom);
+  background-image:
+    /* sun */ radial-gradient(circle at 12% 14%, rgba(255,215,90,0.98) 0 72px, rgba(255,215,90,0.35) 120px, transparent 160px),
+    /* distant mountains */ radial-gradient(ellipse at 75% 60%, rgba(0,0,0,0.12) 0 180px, transparent 260px),
+    /* mountain silhouettes */ linear-gradient(180deg, transparent 58%, rgba(107,124,163,0.95) 59% 68%, transparent 72%),
+    /* rolling hills */ radial-gradient(circle at 30% 85%, rgba(79,138,59,0.95) 0 220px, transparent 260px),
+    /* foreground grass */ linear-gradient(180deg, rgba(46,125,50,0.98) 72%, rgba(18,93,24,0.98) 100%),
+    /* clear sky */ linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 36%, var(--sky-bottom) 62%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 .app-root { padding: 56px 0 0; min-height: 100vh }
 .app-header { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: transparent; color: #fff; display: flex; align-items: center; padding: 0 20px; z-index: 50 }
 .app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
@@ -65,6 +78,33 @@ body { font-family: 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui,
   font-size: clamp(1.2rem, 8vw, 4.2rem);
   font-family: 'Poppins', 'Die Grotesk', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
+
+/* Vertical sliding word rotator used below the name in the big tile */
+.vertical-slider { height: 28px; overflow: hidden; margin-top: 6px }
+.vertical-slider ul { list-style: none; margin: 0; padding: 0; display: block; will-change: transform }
+.vertical-slider li { height: 28px; line-height: 1; display: block; font-size: inherit; font-weight: 700; white-space: nowrap }
+.vertical-slider { /* ensure the container doesn't collapse when font-size is large */ }
+
+/* discrete step animation: show each word, hold, then jump to next (no smooth scrolling) */
+@keyframes slide-vertical {
+  from { transform: translateY(0%); }
+  to { transform: translateY(-800%); }
+}
+/* 9 steps including duplicate first item for seamless loop */
+.role-rotator { margin-top: 8px; overflow: hidden }
+.role-rotator ul { list-style: none; margin: 0; padding: 0; transform: translateY(0); }
+.role-rotator .role-item { font-weight: 600; font-size: inherit; line-height: 1.5; display: block; padding: 0; margin: 0; color: #000 }
+
+/* animation: hold first for 1.5s, smooth upward slide (0.6s), hold second for 1.5s, smooth slide back (0.6s) */
+@keyframes role-swap {
+  0% { transform: translateY(0%); }
+  35.714% { transform: translateY(0%); } /* hold first 1.5s */
+  50% { transform: translateY(-100%); } /* end of 0.6s smooth slide */
+  85.714% { transform: translateY(-100%); } /* hold second 1.5s */
+  100% { transform: translateY(0%); }
+}
+/* JS-driven rotator — disable CSS animation so JS controls timing */
+.role-rotator ul { animation: none; }
 
 /* subtle hover lift */
 .tile:hover { /* no movement - image will change on hover */ }

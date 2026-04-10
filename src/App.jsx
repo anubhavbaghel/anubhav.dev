@@ -1,18 +1,14 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Tile from './components/Tile'
 import './index.css'
 
 // Minimal App: render exactly 9 Tile components and nothing else
 export default function App() {
+  // Merge top-left 2x2 area into a single tile (replaces t1,t2,t4,t5)
   const tiles = [
-    { id: 't1', title: 'Mail', color: '#00A4CC' },
-    { id: 't2', title: 'Calendar', color: '#6A00FF' },
+    { id: 'm1', title: 'Dashboard', color: '#00A4CC' },
     // this entry becomes the large area on the right that will contain a nested 2x2 grid
     { id: 't3', title: 'Right Group', color: '#00B9FF' },
-    { id: 't4', title: 'Store', color: '#0A7F00' },
-    { id: 't5', title: 'People', color: '#FF6A00' },
-    // removed the separate middle-right tile (was t6) because the right column top+middle
-    // will be occupied by the nested 2x2 grid.
     { id: 't7', title: 'Maps', color: '#6A00FF' },
     { id: 't8', title: 'OneDrive', color: '#2B6CB0' },
     { id: 't9', title: 'Messaging', color: '#D400CC' },
@@ -38,14 +34,106 @@ export default function App() {
     { id: 'r8', title: 'Live H', color: '#CE93D8', col: 1, row: 2 },
   ]
 
+  function RoleRotator({ items = ['Developer', 'Problem Solver'], hold = 1500, slide = 600 }) {
+    const [translatePx, setTranslatePx] = useState(0) // pixel translate value
+    const [itemHeight, setItemHeight] = useState(0)
+    const [transitionMs, setTransitionMs] = useState(slide)
+    const containerRef = useRef(null)
+    const ulRef = useRef(null)
+    const firstItemRef = useRef(null)
+
+    // measure item height and set container height to match
+    useEffect(() => {
+      const measure = () => {
+        const first = firstItemRef.current || (ulRef.current && ulRef.current.querySelector('li'))
+        if (first && containerRef.current) {
+          const h = Math.ceil(first.getBoundingClientRect().height)
+          setItemHeight(h)
+          containerRef.current.style.height = `${h}px`
+        }
+      }
+      measure()
+      window.addEventListener('resize', measure)
+      return () => window.removeEventListener('resize', measure)
+    }, [items])
+
+    // control timing once we know the item height — cycle through all items sequentially
+    useEffect(() => {
+      if (!itemHeight) return
+      const timerIds = []
+      let index = 0
+
+      const itemsCount = items.length
+
+      const schedule = () => {
+        // hold current index
+        timerIds.push(setTimeout(() => {
+          const next = index + 1
+          // translate to next (allow transition)
+          setTransitionMs(slide)
+          setTranslatePx(-next * itemHeight)
+
+          // after slide finishes
+          timerIds.push(setTimeout(() => {
+            if (next === itemsCount) {
+              // reached duplicate of first item — snap back to 0 without transition
+              setTransitionMs(0)
+              setTranslatePx(0)
+              // force reflow then re-enable transition for next cycle
+              timerIds.push(setTimeout(() => {
+                index = 0
+                setTransitionMs(slide)
+                schedule()
+              }, 20))
+            } else {
+              index = next
+              schedule()
+            }
+          }, slide))
+        }, hold))
+      }
+
+      // start
+      setTransitionMs(slide)
+      setTranslatePx(0)
+      index = 0
+      schedule()
+
+      return () => timerIds.forEach((id) => clearTimeout(id))
+    }, [itemHeight, items.length, hold, slide])
+
+    const ulStyle = { transform: `translateY(${translatePx}px)`, transition: `transform ${transitionMs}ms ease` }
+
+    return (
+      <div className="role-rotator" ref={containerRef} aria-hidden>
+        <ul ref={ulRef} style={ulStyle}>
+          {items.concat(items[0]).map((it, i) => (
+            <li ref={i === 0 ? firstItemRef : undefined} className="role-item" key={i}>
+              {it}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
   return (
     <div className="app-root">
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
           <section className="tiles-layout">
             {tiles.map((t) => {
-              if (t.id === 't1') {
-                return <Tile key={t.id} color={t.color}><span>Hello</span></Tile>
+              if (t.id === 'm1') {
+                return (
+                  <Tile key={t.id} color={t.color} style={{ gridColumn: '1 / span 2', gridRow: '1 / span 2' }}>
+                    <div>
+                      <span>Hello</span>
+                      <div style={{ color: '#000', marginTop: 8, fontWeight: 600 }}>I’m Anubhav Baghel</div>
+
+                      <RoleRotator items={["Developer", "Problem Solver", "Builder", "Strategist", "Navigator", "Thinker", "Debugger"]} hold={1500} slide={600} />
+                    </div>
+                  </Tile>
+                )
               }
               if (t.id === 't3') {
                 return (
