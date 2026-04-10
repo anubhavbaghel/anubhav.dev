@@ -1,0 +1,81 @@
+:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px }
+* { box-sizing: border-box }
+/* Use Segoe UI first for Metro feel, fall back to Manrope/system fonts */
+body { font-family: 'Segoe UI', 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; background:var(--bg); color: #111; background-image: none; }
+.app-root { padding: 56px 0 0; min-height: 100vh }
+.app-header { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: transparent; color: #fff; display: flex; align-items: center; padding: 0 20px; z-index: 50 }
+.app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
+
+/* Metro-style tiles container */
+.tiles-layout { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: var(--tile-gap); padding: var(--tiles-padding); height: calc(100vh - 56px); min-width: 1200px; }
+
+/* Overall outer layout: main tile area + right scrollable rail */
+/* allow the whole outer layout to scroll horizontally (page-level horizontal scroll) */
+.layout-outer { display: grid; grid-template-columns: 1fr 340px; gap: var(--tile-gap); min-height: auto; overflow-x: auto; }
+.main-area { min-height: 0 }
+
+/* Right scrollable sidebar containing a dynamic "live" metro grid */
+.right-scroller { background: rgba(255,255,255,0.03); border-left: 1px solid rgba(255,255,255,0.04); overflow: visible; -webkit-overflow-scrolling: touch; height: auto; padding: var(--tiles-padding); }
+
+/* Horizontal live-grid: tiles flow left-to-right in columns so scrolling moves horizontally */
+.live-grid { display: grid; grid-auto-flow: column; grid-auto-columns: 160px; grid-template-rows: repeat(4, 92px); gap: var(--tile-gap); align-content: start; grid-auto-flow: column dense }
+.live-grid .tile { padding: 0; min-height: 0; display:flex; align-items: stretch; width: 100%; height: 100% }
+.live-grid .tile { padding: 0; min-height: 0; display:flex; align-items: stretch }
+
+/* Nested 2x2 grid used when a tile area is split into 4 smaller tiles */
+.nested-grid-wrapper { height: 100%; min-height: 0 }
+.nested-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: var(--tile-gap); height: 100% }
+.nested-grid .tile { padding: 0; min-height: 0; display: flex; align-items: stretch }
+
+/* Left column: 2x2 grid */
+.left-column { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: var(--tile-gap); height: 100% }
+.left-column .tile { display: flex; align-items: stretch; padding: 0; min-height: 0 }
+
+/* Right column: two rows of 2 tiles each */
+.right-column { display: flex; flex-direction: column; gap: var(--tile-gap); height: 100% }
+.right-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: var(--tile-gap); height: 100% }
+.right-grid .tile { padding: 0; min-height: 0 }
+
+/* Metro tile styling: flat, sharp corners, large labels */
+.tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end }
+.tile .tile-icon { position: absolute; left: 12px; top: 12px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.95 }
+.tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
+.tile-title { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.2px }
+.tile-sub { margin-top: 6px; color: inherit; opacity: 0.9; font-size: 0.95rem }
+
+/* subtle hover lift */
+.tile:hover { /* no movement - image will change on hover */ }
+
+/* tile image layers: base and hover; hover layer fades in */
+.tile-image, .tile-image-hover { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transition: opacity 220ms ease }
+.tile-image { opacity: 1 }
+.tile-image-hover { opacity: 0 }
+.tile:hover .tile-image-hover { opacity: 1 }
+.tile:hover .tile-image { opacity: 0.2 }
+
+@media (max-width: 920px) {
+  .tiles-layout { grid-template-columns: 1fr; }
+  .left-column { order: 1 }
+  .right-column { order: 2 }
+  .right-row { grid-template-columns: repeat(2, 1fr) }
+}
+
+@media (max-width: 420px) {
+  .right-row { grid-template-columns: repeat(1, 1fr) }
+}
+
+/* Hide scrollbars but keep scrolling functional */
+.layout-outer, .tiles-layout, .tiles-strip {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.layout-outer::-webkit-scrollbar, .tiles-layout::-webkit-scrollbar, .tiles-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* Responsive: on smaller screens use vertical scrolling instead of horizontal */
+@media (max-width: 900px) {
+  .layout-outer { overflow-x: visible; overflow-y: auto; grid-template-columns: 1fr; }
+  .tiles-layout { height: auto; grid-template-columns: 1fr; grid-template-rows: none; min-width: auto; }
+}
+
