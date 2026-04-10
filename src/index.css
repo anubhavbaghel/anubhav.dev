@@ -151,7 +151,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   height: 100%;
   background: transparent;
   transform: translateY(100%);
-  transition: transform 360ms ease;
+  transition: transform 360ms ease, background 200ms linear;
   z-index: 1;
 }
 .tile.tile--slide:hover::after { transform: translateY(0%); background: #ffffff }
@@ -169,6 +169,30 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile.tile--slide:hover .tile-center-logo img[src*="React-icon.svg"] {
   transform: rotate(90deg);
 }
+
+/* JS tile: on hover make background black and JS label yellow */
+.tile.tile--js:hover { background: #000 !important }
+.tile.tile--js .tile-bottom-right { color: #323330; background: transparent }
+.tile.tile--js:hover .tile-bottom-right { color: #F0DB4F; background: transparent }
+
+/* Override slide overlay color for JS tile to be black instead of white */
+.tile.tile--js.tile--slide::after { background: transparent; transform: translateY(100%); transition: transform 360ms ease, background 200ms linear; z-index: 1 }
+.tile.tile--js.tile--slide:hover::after { transform: translateY(0%); background: #000 }
+
+/* Top-left small typing line inside a tile (used for JS tile) */
+.tile-top-left { position: absolute; left: 10px; top: 8px; z-index: 6; pointer-events: none; color: rgba(255,255,255,0.9); font-family: 'Host Grotesk', monospace; font-size: 0.9rem }
+.tile--js .tile-top-left { color: #F0DB4F } /* yellow on JS tile */
+.typing { display: inline-block; white-space: nowrap; overflow: hidden; border-right: 2px solid rgba(255,255,255,0.9); box-sizing: content-box }
+
+/* typing animation: reveal text then keep caret blinking */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blinkCaret {
+  50% { border-color: transparent }
+}
+.tile-top-left .typing { width: 0; animation: typing 1.6s steps(28, end) 0s forwards, blinkCaret 0.8s step-end infinite 1.6s }
 
 /* Right-side logo container inside a tile (used for React logo in the big tile) */
 /* tile-right-logo removed (React logo moved/removed) */

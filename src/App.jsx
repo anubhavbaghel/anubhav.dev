@@ -154,7 +154,10 @@ export default function App() {
 
                         if (n.id === 'n2') {
                           return (
-                            <Tile key={n.id} title={n.title} color={n.color} className="tile--slide">
+                            <Tile key={n.id} title={n.title} color={n.color} className="tile--js">
+                              <div className="tile-top-left" aria-hidden>
+                                <div className="typing">console.log('helloworld')</div>
+                              </div>
                               <div className="tile-bottom-right tile-bottom-right--big" aria-hidden>JS</div>
                             </Tile>
                           )
