@@ -43,9 +43,9 @@ export default function App() {
                   <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" style={{ gridColumn: '1 / span 2', gridRow: '2 / span 2' }}>
                       <div>
                       <ReconstructWords words={["Namaste", "Hola", "Ciao", "Hello"]} />
-                      <div style={{ color: '#000', marginTop: 8, fontWeight: 500 }}>I’m Anubhav</div>
+                      <div style={{ color: '#000', marginTop: 8, fontWeight: 400 }}>I’m Anubhav</div>
                       <div id="description" style={{ marginTop: 8, color: '#222', fontWeight: 400, fontSize: "1.5rem" }}>
-                        I am a FrontEnd Developer who views the web as a canvas for interaction. By blending robust technical logic with intuitive design, I architect seamless digital experiences that translate complex problems into elegant solutions, driving user engagement and measurable performance at every click.
+                        Frontend Developer who turns ideas into clean and functional web interfaces.
                       </div>
                     </div>
                   </Tile>
@@ -119,26 +119,26 @@ export default function App() {
                       background: 'transparent',
                     }}
                   >
-                    <div key={`${t.id}-b-1`} className="tile tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                    <Tile key={`${t.id}-b-1`} color={'#ffffff'} className="tile--small tile--threads" style={{ background: '#ffffff', padding: '10%' }}>
                       <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                       </div>
-                    </div>
-                    <div key={`${t.id}-b-2`} className="tile tile--small" style={{ background: '#ffffff', padding: 0 }}>
+                    </Tile>
+                    <Tile key={`${t.id}-b-2`} color={'#ffffff'} className="tile--small tile--github" style={{ background: '#ffffff', padding: 0 }}>
                       <div className="tile-center-logo" aria-hidden>
                         <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                       </div>
-                    </div>
-                    <div key={`${t.id}-b-3`} className="tile tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                    </Tile>
+                    <Tile key={`${t.id}-b-3`} color={'#ffffff'} className="tile--small tile--linkedin" style={{ background: '#ffffff', padding: '10%' }}>
                       <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                       </div>
-                    </div>
-                    <div key={`${t.id}-b-4`} className="tile tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                    </Tile>
+                    <Tile key={`${t.id}-b-4`} color={'#ffffff'} className="tile--small" style={{ background: '#ffffff', padding: '10%' }}>
                       <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                       </div>
-                    </div>
+                    </Tile>
                   </div>
                 )
               }
@@ -159,7 +159,16 @@ export default function App() {
                   </button>
                 </Tile>
               )
-              if (t.id === 't9') return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} className="tile--small" />
+              if (t.id === 't9') {
+                return (
+                  <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={'#000000'} className="tile--small">
+                    <div className="tile-caption" style={{ marginTop: 8, fontWeight: 400, fontSize: '1.05rem', color: 'inherit', opacity: 0.95, fontStyle: 'italic' }}>
+                      "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work."
+                      <div style={{ marginTop: 6, fontStyle: 'normal', fontWeight: 500 }}>— Steve Jobs</div>
+                    </div>
+                  </Tile>
+                )
+              }
               return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} />
             })}
           </section>
