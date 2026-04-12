@@ -229,6 +229,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   filter: invert(34%) sepia(77%) saturate(500%) hue-rotate(85deg) brightness(95%) contrast(90%);
 }
 
+/* Ensure social media tiles fill their grid cell and keep consistent sizing */
+.social-media { display: grid; }
+.social-media > * { width: 100%; height: 100%; box-sizing: border-box; }
+.social-media a { display: block; width: 100%; height: 100%; text-decoration: none; }
+.social-media .tile { padding: 0 !important; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.social-media .tile--small .tile-center-logo img { width: 50%; height: 50%; object-fit: contain; }
 /* Make GitHub small tile go black on hover and ensure icon remains visible */
 .tile.tile--github:hover { background: #000 !important; color: #fff }
 .tile.tile--github:hover .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {

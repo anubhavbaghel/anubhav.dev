@@ -109,7 +109,7 @@ export default function App() {
                 return (
                   <div
                     key={t.id}
-                    className="social-media tile"
+                    className="social-media"
                     style={{
                       display: 'grid',
                       gridTemplateColumns: '1fr 1fr',
