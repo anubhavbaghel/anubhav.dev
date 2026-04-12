@@ -150,6 +150,9 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   .tile-center-logo img { width: 56px; height: 56px }
 }
 
+/* Round any on-page favicon image if used directly */
+img[src$="/favicon.png"], img[src$="favicon.png"] { border-radius: 50%; display: inline-block; }
+
 /* force Wordpress SVG to render black when used as an <img> */
 .tile-center-logo img[src*="Wordpress-Logo.svg"] {
   /* make the Wordpress SVG appear white on dark background */
