@@ -119,26 +119,34 @@ export default function App() {
                       background: 'transparent',
                     }}
                   >
-                    <Tile key={`${t.id}-b-1`} color={'#ffffff'} className="tile--small tile--threads" style={{ background: '#ffffff', padding: '10%' }}>
-                      <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
-                      </div>
-                    </Tile>
-                    <Tile key={`${t.id}-b-2`} color={'#ffffff'} className="tile--small tile--github" style={{ background: '#ffffff', padding: 0 }}>
-                      <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
-                      </div>
-                    </Tile>
-                    <Tile key={`${t.id}-b-3`} color={'#ffffff'} className="tile--small tile--linkedin" style={{ background: '#ffffff', padding: '10%' }}>
-                      <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
-                      </div>
-                    </Tile>
-                    <Tile key={`${t.id}-b-4`} color={'#ffffff'} className="tile--small" style={{ background: '#ffffff', padding: '10%' }}>
-                      <div className="tile-center-logo" aria-hidden>
-                        <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
-                      </div>
-                    </Tile>
+                    <a key={`${t.id}-b-1`} href="https://www.threads.com/@code.anubhav" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <Tile color={'#ffffff'} className="tile--small tile--threads" style={{ background: '#ffffff', padding: '10%' }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
+                        </div>
+                      </Tile>
+                    </a>
+                    <a key={`${t.id}-b-2`} href="https://github.com/anubhavbaghel" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <Tile color={'#ffffff'} className="tile--small tile--github" style={{ background: '#ffffff', padding: 0 }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        </div>
+                      </Tile>
+                    </a>
+                    <a key={`${t.id}-b-3`} href="https://www.linkedin.com/in/anubhav-baghel/" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <Tile color={'#ffffff'} className="tile--small tile--linkedin" style={{ background: '#ffffff', padding: '10%' }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
+                        </div>
+                      </Tile>
+                    </a>
+                    <a key={`${t.id}-b-4`} href="mailto:code.anubhavbaghel@gmail.com" style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <Tile color={'#ffffff'} className="tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
+                        </div>
+                      </Tile>
+                    </a>
                   </div>
                 )
               }
