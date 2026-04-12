@@ -56,12 +56,15 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   background-attachment: fixed;
   background-size: cover;
 }
-.app-root { padding: 56px 0 0; min-height: 100vh }
+.app-root { padding: 0 0 0; min-height: 100vh }
 .app-header { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: transparent; color: #fff; display: flex; align-items: center; padding: 0 20px; z-index: 50 }
 .app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
 
 /* Metro-style tiles container */
-.tiles-layout { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: var(--tile-gap); padding: var(--tiles-padding); height: calc(100vh - 56px); min-width: 1200px; }
+.tiles-layout { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 40px repeat(3, 1fr); gap: var(--tile-gap); padding: var(--tiles-padding); height: 100vh; min-width: 1200px; }
+
+/* thin naming row cells */
+.tile-name { display: flex; align-items: center; justify-content: flex-start; padding-left: 0; height: 40px; color: rgba(255,255,255,0.85); font-weight:400; pointer-events: none; text-align: left; font-size: 1.5rem; }
 
 /* Overall outer layout: main tile area + right scrollable rail */
 /* allow the whole outer layout to scroll horizontally (page-level horizontal scroll) */
@@ -76,8 +79,8 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .live-grid .tile { padding: 0; min-height: 0; display:flex; align-items: stretch; width: 100%; height: 100% }
 .live-grid .tile { padding: 0; min-height: 0; display:flex; align-items: stretch }
 
-/* Nested 2x2 grid used when a tile area is split into 4 smaller tiles */
-.nested-grid-wrapper { height: 100%; min-height: 0 }
+./* Nested 2x2 grid used when a tile area is split into 4 smaller tiles */
+.technical-stack { height: 100%; min-height: 0; position: relative }
 .nested-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: var(--tile-gap); height: 100% }
 .nested-grid .tile { padding: 0; min-height: 0; display: flex; align-items: stretch }
 
@@ -96,6 +99,20 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
 .tile-title { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2px }
 .tile-sub { margin-top: 6px; color: inherit; opacity: 0.95; font-size: 1rem; font-weight: 600 }
+
+/* Heading visually attached to the technical-stack tile without affecting layout */
+.technical-stack .tech-heading {
+  position: absolute;
+  top: -1.25rem;
+  left: var(--tiles-padding);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  opacity: 0.95;
+  background: transparent;
+  pointer-events: none;
+  text-align: left;
+}
 
 /* custom content inside a tile (used for big HELLO text) */
 .tile-content { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; z-index: 2; pointer-events: none; padding: 12px }
@@ -161,11 +178,13 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 .tile.tile--slide:hover .tile-center-logo { transform: none }
 
-/* GitHub icon hover tint to #0FBF3E */
-.tile .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
+/* GitHub icon hover tint to #0FBF3E - scoped to the small social tiles only */
+.tile.tile--small .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
   transition: filter 240ms ease, transform 240ms ease;
 }
-.tile:hover .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
+/* only tint when the small tile itself is hovered (not when an ancestor .tile is hovered) */
+.tile.tile--small:hover .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"],
+.social-media .tile.tile--small:hover .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
   /* approximate bright green #0FBF3E */
   filter: invert(34%) sepia(77%) saturate(500%) hue-rotate(85deg) brightness(95%) contrast(90%);
 }
@@ -205,6 +224,31 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 /* Right-side logo container inside a tile (used for React logo in the big tile) */
 /* tile-right-logo removed (React logo moved/removed) */
+
+/* Microsoft-style NE arrow (bottom-right) — positioned inside a tile */
+.tile .ms-arrow-ne {
+  position: absolute;
+  right: 16px;
+  bottom: 5px;
+  width: fit-content;
+  height: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: inherit;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  cursor: pointer;
+  z-index: 12;
+  transition: transform 120ms ease;
+  padding: 0;
+}
+.tile .ms-arrow-ne:hover { transform: none; background: transparent; }
+.tile .ms-arrow-ne svg { display: block; width: 40px; height: 40px; stroke: currentColor; fill: none; stroke-width: 2 }
+
 
 /* Vertical sliding word rotator used below the name in the big tile */
 .vertical-slider { height: 28px; overflow: hidden; margin-top: 6px }
@@ -308,7 +352,59 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 @keyframes win8-spin { to { transform: rotate(360deg) } }
 
 /* Reconstructing words (letter-morph) */
-.reconstruct { font-weight: 700; font-size: 4rem; line-height: 1; letter-spacing: 0.2px; color: #fff }
-.reconstruct { pointer-events: none }
+.reconstruct { font-weight: 500; font-size: clamp(3rem, 4vw, 2rem); line-height: 1; letter-spacing: 0.2px; color: #fff; pointer-events: none }
+
+/* Mobile (phone) responsiveness: Windows Phone-style vertical mosaic */
+@media (max-width: 720px) {
+  :root { --tile-gap: 10px; --tiles-padding: 12px }
+
+  /* Mobile: vertical mosaic single-column flow */
+  .layout-outer { grid-template-columns: 1fr; overflow-x: hidden; overflow-y: auto }
+
+  .tiles-layout {
+    display: grid;
+    grid-template-columns: 1fr; /* single column flow for mosaic */
+    grid-auto-rows: auto;
+    gap: var(--tile-gap);
+    padding: var(--tiles-padding);
+    width: 100%;
+    min-width: 0 !important;
+    height: auto !important;
+  }
+
+  /* Tile size helpers for mosaic: small / medium / large / wide */
+  .tile--small { height: 84px; }
+  .tile--medium { height: 168px; }
+  .tile--large { height: 252px; }
+  .tile--wide { width: 100%; height: 120px; }
+
+  /* Dashboard: make large prominent square tile at top */
+  .tile--dashboard { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; }
+
+  /* Top-right nested area becomes a 2x2 mini-grid inside the flow */
+  .nested-grid-wrapper { width: 100%; }
+  .nested-grid.top-right { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--tile-gap); width: 100%; }
+  .nested-grid.top-right .tile { aspect-ratio: 1 / 1; height: auto; }
+
+  /* Generic nested fallback */
+  .nested-grid:not(.top-right) { grid-template-columns: 1fr; grid-auto-rows: auto; gap: var(--tile-gap); height: auto }
+  .nested-grid .tile { padding: 12px; min-height: 64px; align-items: center }
+
+  /* Make touch targets comfortable */
+  .tiles-layout .tile, .live-grid .tile { padding: 12px; box-sizing: border-box; width: 100%; max-width: 100%; }
+
+  /* ensure images/logos don't overflow */
+  .tile-center-logo img { max-width: 100%; height: auto }
+
+  /* Right scroller stacks under main content and gets smaller tiles */
+  .right-scroller { padding: 12px }
+  .live-grid { grid-auto-columns: 120px; grid-template-rows: repeat(4, 76px); gap: 8px }
+
+  /* Smooth touch scrolling */
+  .layout-outer, .tiles-layout { -webkit-overflow-scrolling: touch }
+}
+
+/* Removed previous global mobile override that conflicted with the two-column dashboard layout.
+   Layout for mobile is controlled in the earlier @media (max-width: 720px) block above. */
 
 

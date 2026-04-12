@@ -24,100 +24,9 @@ export default function App() {
     { id: 'n4', title: 'Shopify', color: '#C8A2FF' },
   ]
 
-  // right-scroller live tiles (dynamic metro shapes)
-  const rightTiles = [
-    { id: 'r1', title: 'Live A', color: '#FF8A65', col: 2, row: 2 },
-    { id: 'r2', title: 'Live B', color: '#4DB6AC', col: 1, row: 1 },
-    { id: 'r3', title: 'Live C', color: '#BA68C8', col: 1, row: 2 },
-    { id: 'r4', title: 'Live D', color: '#90CAF9', col: 2, row: 1 },
-    { id: 'r5', title: 'Live E', color: '#FFD54F', col: 1, row: 1 },
-    { id: 'r6', title: 'Live F', color: '#A5D6A7', col: 1, row: 1 },
-    { id: 'r7', title: 'Live G', color: '#FFAB91', col: 2, row: 1 },
-    { id: 'r8', title: 'Live H', color: '#CE93D8', col: 1, row: 2 },
-  ]
+  // right-scroller removed — live tiles handled elsewhere if needed
 
-  function RoleRotator({ items = ['Developer', 'Problem Solver'], hold = 1500, slide = 600 }) {
-    const [translatePx, setTranslatePx] = useState(0) // pixel translate value
-    const [itemHeight, setItemHeight] = useState(0)
-    const [transitionMs, setTransitionMs] = useState(slide)
-    const containerRef = useRef(null)
-    const ulRef = useRef(null)
-    const firstItemRef = useRef(null)
-
-    // measure item height and set container height to match
-    useEffect(() => {
-      const measure = () => {
-        const first = firstItemRef.current || (ulRef.current && ulRef.current.querySelector('li'))
-        if (first && containerRef.current) {
-          const h = Math.ceil(first.getBoundingClientRect().height)
-          setItemHeight(h)
-          containerRef.current.style.height = `${h}px`
-        }
-      }
-      measure()
-      window.addEventListener('resize', measure)
-      return () => window.removeEventListener('resize', measure)
-    }, [items])
-
-    // control timing once we know the item height — cycle through all items sequentially
-    useEffect(() => {
-      if (!itemHeight) return
-      const timerIds = []
-      let index = 0
-
-      const itemsCount = items.length
-
-      const schedule = () => {
-        // hold current index
-        timerIds.push(setTimeout(() => {
-          const next = index + 1
-          // translate to next (allow transition)
-          setTransitionMs(slide)
-          setTranslatePx(-next * itemHeight)
-
-          // after slide finishes
-          timerIds.push(setTimeout(() => {
-            if (next === itemsCount) {
-              // reached duplicate of first item — snap back to 0 without transition
-              setTransitionMs(0)
-              setTranslatePx(0)
-              // force reflow then re-enable transition for next cycle
-              timerIds.push(setTimeout(() => {
-                index = 0
-                setTransitionMs(slide)
-                schedule()
-              }, 20))
-            } else {
-              index = next
-              schedule()
-            }
-          }, slide))
-        }, hold))
-      }
-
-      // start
-      setTransitionMs(slide)
-      setTranslatePx(0)
-      index = 0
-      schedule()
-
-      return () => timerIds.forEach((id) => clearTimeout(id))
-    }, [itemHeight, items.length, hold, slide])
-
-    const ulStyle = { transform: `translateY(${translatePx}px)`, transition: `transform ${transitionMs}ms ease` }
-
-    return (
-      <div className="role-rotator" ref={containerRef} aria-hidden>
-        <ul ref={ulRef} style={ulStyle}>
-          {items.concat(items[0]).map((it, i) => (
-            <li ref={i === 0 ? firstItemRef : undefined} className="role-item" key={i}>
-              {it}
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
+  // RoleRotator removed per request
 
   return (
     <div className="app-root">
@@ -125,27 +34,32 @@ export default function App() {
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
           <section className="tiles-layout">
+            <div className="tile-name">About Me</div>
+            <div className="tile-name"></div>
+            <div className="tile-name">Skills & Technologies</div>
             {tiles.map((t) => {
               if (t.id === 'm1') {
                 return (
-                  <Tile key={t.id} color={t.color} style={{ gridColumn: '1 / span 2', gridRow: '1 / span 2' }}>
-                    <div>
+                  <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" style={{ gridColumn: '1 / span 2', gridRow: '2 / span 2' }}>
+                      <div>
                       <ReconstructWords words={["Namaste", "Hola", "Ciao", "Hello"]} />
-                      <div style={{ color: '#000', marginTop: 8, fontWeight: 500 }}>I’m Anubhav Baghel</div>
-
-                      <RoleRotator items={["Developer", "Problem Solver", "Builder", "Strategist", "Navigator", "Thinker", "Debugger"]} hold={1500} slide={600} />
+                      <div style={{ color: '#000', marginTop: 8, fontWeight: 500 }}>I’m Anubhav</div>
+                      <div id="description" style={{ marginTop: 8, color: '#222', fontWeight: 400, fontSize: "1.5rem" }}>
+                        I am a FrontEnd Developer who views the web as a canvas for interaction. By blending robust technical logic with intuitive design, I architect seamless digital experiences that translate complex problems into elegant solutions, driving user engagement and measurable performance at every click.
+                      </div>
                     </div>
                   </Tile>
                 )
               }
               if (t.id === 't3') {
                 return (
-                  <div key="right-nested" className="nested-grid-wrapper" style={{ gridColumn: '3', gridRow: 'span 2' }}>
-                    <div className="nested-grid">
+                  <div key="right-nested" className="technical-stack" style={{ gridColumn: '3', gridRow: '2 / span 2' }}>
+                    <div className="tech-heading" aria-hidden>Skill & Technologies</div>
+                    <div className="nested-grid top-right">
                       {nested.map((n) => {
                         if (n.id === 'n1') {
                           return (
-                            <Tile key={n.id} title={n.title} color={'#ffffff'} className="tile--slide">
+                            <Tile key={n.id} title={n.title} color={'#ffffff'} className="tile--slide tile--react tile--small">
                               <div className="tile-center-logo" aria-hidden>
                                 <img src={'/assets/React-icon.svg'} alt="React" />
                               </div>
@@ -155,7 +69,7 @@ export default function App() {
 
                         if (n.id === 'n2') {
                           return (
-                            <Tile key={n.id} title={n.title} color={n.color} className="tile--js">
+                            <Tile key={n.id} title={n.title} color={n.color} className="tile--js tile--small">
                               <div className="tile-top-left" aria-hidden>
                                 <div className="typing">console.log('helloworld')</div>
                               </div>
@@ -166,7 +80,7 @@ export default function App() {
 
                         if (n.id === 'n3') {
                           return (
-                            <Tile key={n.id} title={n.title} color={'#000000'} className="tile--slide">
+                            <Tile key={n.id} title={n.title} color={'#000000'} className="tile--slide tile--small">
                               <div className="tile-center-logo" aria-hidden>
                                 <img src={'/assets/Wordpress-Logo.svg'} alt="Wordpress" />
                               </div>
@@ -176,7 +90,7 @@ export default function App() {
 
                         if (n.id === 'n4') {
                           return (
-                            <Tile key={n.id} title={n.title} color={'#96BF48'} className="tile--slide">
+                            <Tile key={n.id} title={n.title} color={'#96BF48'} className="tile--slide tile--small">
                               <div className="tile-center-logo" aria-hidden>
                                 <img src={'/assets/shopify/shopify_glyph_black.svg'} alt="Shopify" />
                               </div>
@@ -193,64 +107,65 @@ export default function App() {
 
               if (t.id === 't8') {
                 return (
-                  <div key={t.id} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                    <Tile key={`${t.id}-a`} title={'Socials'} color={'#1DA1F2'}>
-                      {/* Socials content placeholder */}
-                    </Tile>
-                    <div
-                      key={`${t.id}-b`}
-                      className="tile"
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gridTemplateRows: '1fr 1fr',
-                        gap: 'var(--tile-gap)',
-                        padding: 0,
-                        background: 'transparent',
-                      }}
-                    >
-                      <div key={`${t.id}-b-1`} className="tile" style={{ background: '#ffffff', padding: '10%' }}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
-                        </div>
+                  <div
+                    key={t.id}
+                    className="social-media tile"
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr',
+                      gridTemplateRows: '1fr 1fr',
+                      gap: 'var(--tile-gap)',
+                      padding: 0,
+                      background: 'transparent',
+                    }}
+                  >
+                    <div key={`${t.id}-b-1`} className="tile tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                      <div className="tile-center-logo" aria-hidden>
+                        <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                       </div>
-                      <div key={`${t.id}-b-2`} className="tile" style={{ background: '#ffffff', padding: 0 }}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
-                        </div>
+                    </div>
+                    <div key={`${t.id}-b-2`} className="tile tile--small" style={{ background: '#ffffff', padding: 0 }}>
+                      <div className="tile-center-logo" aria-hidden>
+                        <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                       </div>
-                      <div key={`${t.id}-b-3`} className="tile" style={{ background: '#ffffff', padding: '10%' }}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
-                        </div>
+                    </div>
+                    <div key={`${t.id}-b-3`} className="tile tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                      <div className="tile-center-logo" aria-hidden>
+                        <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                       </div>
-                      <div key={`${t.id}-b-4`} className="tile" style={{ background: '#ffffff', padding: '10%' }}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
-                        </div>
+                    </div>
+                    <div key={`${t.id}-b-4`} className="tile tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                      <div className="tile-center-logo" aria-hidden>
+                        <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                       </div>
                     </div>
                   </div>
                 )
               }
 
+              if (t.id === 't7') return (
+                <Tile key={t.id} title={'Projects'} subtitle={t.subtitle} color={t.color} className="tile--medium">
+                  <div className="tile-title" style={{ fontWeight: 400 }}>Projects</div>
+                  <button
+                    className="ms-arrow-ne"
+                    aria-label="Open external"
+                    type="button"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M14 3h7v7" />
+                      <path d="M10 14L21 3" />
+                    </svg>
+                  </button>
+                </Tile>
+              )
+              if (t.id === 't9') return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} className="tile--small" />
               return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} />
             })}
           </section>
         </main>
 
-        <aside className="right-scroller">
-          <div className="live-grid">
-            {rightTiles.map((r) => (
-              <Tile
-                key={r.id}
-                title={r.title}
-                color={r.color}
-                style={{ gridColumn: `span ${r.col || 1}`, gridRow: `span ${r.row || 1}` }}
-              />
-            ))}
-          </div>
-        </aside>
+        {/* right-scroller removed */}
       </div>
     </div>
   )
@@ -307,3 +222,26 @@ if (typeof window !== 'undefined') {
     window.addEventListener('resize', update)
   })
 }
+
+// Microsoft-style northeast arrow button (bottom-right)
+// placed outside the tiles layout so it overlays the page
+const insertMsArrow = () => {
+  if (typeof document === 'undefined') return
+  const root = document.querySelector('.app-root')
+  if (!root || root.querySelector('.ms-arrow-ne')) return
+  const btn = document.createElement('button')
+  btn.className = 'ms-arrow-ne'
+  btn.setAttribute('aria-label', 'Open external')
+  btn.type = 'button'
+  btn.innerHTML = `
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+      <path d="M14 3h7v7" />
+      <path d="M10 14L21 3" />
+    </svg>
+  `
+  // no-op click for now; user can attach behavior later
+  btn.addEventListener('click', (e) => e.stopPropagation())
+  root.appendChild(btn)
+}
+
+// removed DOM-insert helper; arrow is now rendered inside the Projects tile
