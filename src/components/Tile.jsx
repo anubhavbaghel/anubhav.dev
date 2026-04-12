@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 
 function hexToLuminance(hex) {
   const c = hex.replace('#', '')
@@ -10,11 +10,44 @@ function hexToLuminance(hex) {
 }
 
 export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children, className = '' }) {
+  const ref = useRef(null)
+  const [tilt, setTilt] = useState(null)
+
   const luminance = hexToLuminance(color)
   const textColor = luminance > 0.5 ? '#111' : '#fff'
 
+  const handleClick = (e) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    // Decide tilt direction: left/right -> rotateY, top/bottom -> rotateX
+    const horizontal = x < rect.width * 0.35 ? -1 : x > rect.width * 0.65 ? 1 : 0
+    const vertical = y < rect.height * 0.35 ? -1 : y > rect.height * 0.65 ? 1 : 0
+
+    if (horizontal !== 0) setTilt({ axis: 'y', dir: horizontal })
+    else if (vertical !== 0) setTilt({ axis: 'x', dir: -vertical })
+    else setTilt({ axis: 'y', dir: x < rect.width / 2 ? -1 : 1 })
+
+    // reset after animation
+    window.setTimeout(() => setTilt(null), 260)
+  }
+
+  const tiltStyle = tilt
+    ? tilt.axis === 'y'
+      ? { transform: `perspective(600px) rotateY(${tilt.dir * 8}deg)` }
+      : { transform: `perspective(600px) rotateX(${tilt.dir * 8}deg)` }
+    : {}
+
   return (
-    <div className={`tile ${size} ${className}`.trim()} style={{ background: color, color: textColor, ...(typeof style === 'object' ? style : {}) }}>
+    <div
+      ref={ref}
+      className={`tile ${size} ${className}`.trim()}
+      onClick={handleClick}
+      style={{ background: color, color: textColor, ...(typeof style === 'object' ? style : {}), ...tiltStyle }}
+    >
       {image ? (
         <div className="tile-image" style={{ backgroundImage: `url(${image})` }} />
       ) : null}

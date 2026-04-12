@@ -91,7 +91,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .right-grid .tile { padding: 0; min-height: 0 }
 
 /* Metro tile styling: flat, sharp corners, large labels */
-.tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end }
+.tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end; transform-style: preserve-3d; will-change: transform; transition: transform 220ms ease }
 .tile .tile-icon { position: absolute; left: 12px; top: 12px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.95 }
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
 .tile-title { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2px }
@@ -160,6 +160,15 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   filter: invert(31%) sepia(45%) saturate(500%) hue-rotate(160deg) brightness(92%) contrast(92%);
 }
 .tile.tile--slide:hover .tile-center-logo { transform: none }
+
+/* GitHub icon hover tint to #0FBF3E */
+.tile .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
+  transition: filter 240ms ease, transform 240ms ease;
+}
+.tile:hover .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
+  /* approximate bright green #0FBF3E */
+  filter: invert(34%) sepia(77%) saturate(500%) hue-rotate(85deg) brightness(95%) contrast(90%);
+}
 
 /* Rotate React svg 90deg on hover (scoped to the slide tiles) */
 .tile.tile--slide .tile-center-logo img[src*="React-icon.svg"] {

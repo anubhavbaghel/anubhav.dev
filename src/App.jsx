@@ -208,17 +208,25 @@ export default function App() {
                         background: 'transparent',
                       }}
                     >
-                      <div key={`${t.id}-b-1`} className="tile" style={{ background: '#1DA1F2', padding: 0 }}>
-                        <div className="tile-center-logo" aria-hidden>🐦</div>
+                      <div key={`${t.id}-b-1`} className="tile" style={{ background: '#ffffff', padding: '10%' }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        </div>
                       </div>
-                      <div key={`${t.id}-b-2`} className="tile" style={{ background: '#24292e', padding: 0 }}>
-                        <div className="tile-center-logo" aria-hidden>🐙</div>
+                      <div key={`${t.id}-b-2`} className="tile" style={{ background: '#ffffff', padding: 0 }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        </div>
                       </div>
-                      <div key={`${t.id}-b-3`} className="tile" style={{ background: '#0A66C2', padding: 0 }}>
-                        <div className="tile-center-logo" aria-hidden>in</div>
+                      <div key={`${t.id}-b-3`} className="tile" style={{ background: '#ffffff', padding: '10%' }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        </div>
                       </div>
-                      <div key={`${t.id}-b-4`} className="tile" style={{ background: '#D44638', padding: 0 }}>
-                        <div className="tile-center-logo" aria-hidden>@</div>
+                      <div key={`${t.id}-b-4`} className="tile" style={{ background: '#ffffff', padding: '10%' }}>
+                        <div className="tile-center-logo" aria-hidden>
+                          <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
+                        </div>
                       </div>
                     </div>
                   </div>
