@@ -20,6 +20,7 @@ export default function LoadingScreen({ minMs = 800 }) {
   return (
     <div className="win8-loader" role="status" aria-label="Loading">
       <div className="win8-box">
+          <div className="win8-message" aria-hidden>Hang On</div>
           <div className="win8-spinner" aria-hidden>
             <div className="dot"></div>
             <div className="dot"></div>
