@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
-:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32; --tile-border: rgba(255,255,255,0.06) }
+:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32 }
 * { box-sizing: border-box }
 /* Host Grotesk local font (extracted from Host_Grotesk.zip into public/fonts/) */
 @font-face {
@@ -42,12 +42,19 @@
   font-display: swap;
 }
 /* keep Poppins as a fallback from Google Fonts */
-body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; font-weight: 500; color: #fff;
-  /* Page background simplified to black per request */
-  background-color: #000;
-  background-image: none;
+body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif; margin:0; font-weight: 500; color: #111;
+  /* Layered CSS landscape: sky, sun, distant mountains and foreground grass */
+  background-color: var(--sky-bottom);
+  /* Use Bing wallpaper as primary background, keep subtle layered gradients on top */
+  background-image: url('/assets/bing/OHR.SpaceTrails_EN-US8009082939_1920x1080.jpg.jpg'),
+    /* sun */ radial-gradient(circle at 12% 14%, rgba(255,215,90,0.98) 0 72px, rgba(255,215,90,0.35) 120px, transparent 160px),
+    /* distant mountains */ radial-gradient(ellipse at 75% 60%, rgba(0,0,0,0.12) 0 180px, transparent 260px),
+    /* mountain silhouettes */ linear-gradient(180deg, transparent 58%, rgba(107,124,163,0.95) 59% 68%, transparent 72%),
+    /* rolling hills */ radial-gradient(circle at 30% 85%, rgba(79,138,59,0.95) 0 220px, transparent 260px),
+    /* foreground grass */ linear-gradient(180deg, rgba(46,125,50,0.98) 72%, rgba(18,93,24,0.98) 100%),
+    /* clear sky */ linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 36%, var(--sky-bottom) 62%);
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
   background-size: cover;
 }
 .app-root { padding: 0 0 0; min-height: 100vh }
@@ -88,7 +95,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .right-grid .tile { padding: 0; min-height: 0 }
 
 /* Metro tile styling: flat, sharp corners, large labels */
-.tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end; transform-style: preserve-3d; will-change: transform; transition: transform 220ms ease; border: 1px solid var(--tile-border); }
+.tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end; transform-style: preserve-3d; will-change: transform; transition: transform 220ms ease }
 .tile .tile-icon { position: absolute; left: 12px; top: 12px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.95 }
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
 .tile-title { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2px }
@@ -234,16 +241,6 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile.tile--github:hover .tile-center-logo img[src*="GitHub_Invertocat_Black_Clearspace.svg"] {
   /* render the GitHub glyph visible on black */
   filter: invert(1) brightness(140%);
-}
-
-/* Subtle greyness overlay for quote tile */
-.tile--quote::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.03); /* very subtle lightening */
-  pointer-events: none;
-  z-index: 1;
 }
 
 /* Rotate React svg 90deg on hover (scoped to the slide tiles) */
