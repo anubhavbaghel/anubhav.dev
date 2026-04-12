@@ -307,3 +307,8 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 @keyframes win8-spin { to { transform: rotate(360deg) } }
 
+/* Reconstructing words (letter-morph) */
+.reconstruct { font-weight: 700; font-size: 4rem; line-height: 1; letter-spacing: 0.2px; color: #fff }
+.reconstruct { pointer-events: none }
+
+

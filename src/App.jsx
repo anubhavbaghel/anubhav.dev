@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Tile from './components/Tile'
+import ReconstructWords from './components/ReconstructWords'
 import LoadingScreen from './components/LoadingScreen'
 import './index.css'
 
@@ -129,7 +130,7 @@ export default function App() {
                 return (
                   <Tile key={t.id} color={t.color} style={{ gridColumn: '1 / span 2', gridRow: '1 / span 2' }}>
                     <div>
-                      <span>Hello</span>
+                      <ReconstructWords words={["Namaste", "Hola", "Ciao", "Hello"]} />
                       <div style={{ color: '#000', marginTop: 8, fontWeight: 500 }}>I’m Anubhav Baghel</div>
 
                       <RoleRotator items={["Developer", "Problem Solver", "Builder", "Strategist", "Navigator", "Thinker", "Debugger"]} hold={1500} slide={600} />
