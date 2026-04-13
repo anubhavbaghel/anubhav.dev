@@ -64,7 +64,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Metro-style tiles container: use four column sections (row on desktop, stacked on mobile) */
 .tiles-layout { display: flex; gap: var(--tile-gap); padding: var(--tiles-padding); height: 100%; min-width: 1200px; }
 .tiles-column { display: flex; flex-direction: column; gap: var(--tile-gap); min-height: 100% }
-.tiles-column.left-column { flex: 2 }
+.tiles-column.left-column { flex: 2; min-height: 50vh }
 .tiles-column.middle-column, .tiles-column.right-column { flex: 1 }
 .tiles-column .tile-name { height: 40px }
 .tiles-column-inner { display: grid; gap: var(--tile-gap); /* inner grid for column contents */ flex: 1 1 auto; grid-template-rows: repeat(3, 1fr) }
@@ -72,6 +72,11 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Make dashboard/about tile fill the full column width and use natural height */
 .tiles-column-inner .tile--dashboard { width: 100%; height: auto; aspect-ratio: auto }
 .tiles-column-inner .tile { width: 100%; }
+
+/* Desktop: ensure the About/dashboard tile is visually prominent */
+@media (max-width: 721px) {
+  .tiles-column.left-column { min-height: 50vh !important; }
+}
 
 
 /* thin naming row cells */
