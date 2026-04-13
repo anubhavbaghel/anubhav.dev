@@ -135,7 +135,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 
 /* custom content inside a tile (used for big HELLO text) */
-.tile-content { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; z-index: 2; pointer-events: none; padding: 12px }
+.tile-content { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: flex-start; z-index: 2; pointer-events: none}
 .tile-content > * { display: block; width: 100%; max-width: 100%; line-height: 1; text-transform: none; white-space: normal; overflow-wrap: break-word; /* responsive font that fits tile */
   font-size: clamp(1.2rem, 8vw, 4.2rem);
   font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Die Grotesk', 'Segoe UI', 'Manrope', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -144,6 +144,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 /* Quote caption inside small tile: reduce size and center vertically */
 .tile-caption { font-size: 0.95rem; line-height: 1.4; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box }
+
+/* Specific tweaks for the Quote tile to avoid overflow and position author */
+.tile--quote { position: relative; }
+.tile--quote .tile-caption { display: block; padding: 10px; box-sizing: border-box; white-space: normal; overflow-wrap: break-word; }
+.tile--quote .tile-caption-text { display: block; font-style: italic; color: inherit; opacity: 0.95; font-weight: 400; font-size: 1rem; margin-bottom: 36px; }
+.tile--quote .tile-caption-author { position: absolute; right: 10px; bottom: 8px; font-style: normal; font-weight: 600; opacity: 0.95; color: inherit; z-index: 3; }
 
 /* small bottom-right label inside a tile (used for tech names like JavaScript) */
 .tile-bottom-right { position: absolute; right: 8px; bottom: 0px; width: 120px; display: flex; align-items: center; justify-content: center; z-index: 3; pointer-events: none; font-weight: 600; font-size: 0.95rem; color: #323330; background: rgba(255,255,255,0.02); border-radius: 2px; padding: 6px }
@@ -615,6 +621,8 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Make quote caption smaller on narrow mobile screens */
 @media (max-width: 720px) {
   .tile-caption { font-size: 0.7rem !important; }
+  .tile--quote .tile-caption-text { font-size: 0.85rem !important; margin-bottom: 32px; }
+  .tile--quote .tile-caption-author { font-size: 0.75rem !important; }
 }
 
 /* Ensure small tiles have a sensible minimum height on desktop too (fix invisible resume tile) */

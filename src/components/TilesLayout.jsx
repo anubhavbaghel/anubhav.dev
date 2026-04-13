@@ -117,10 +117,10 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
 
     if (t.id === 't9') {
       return (
-        <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={'#000000'} className="tile--small" flipped={flipped} style={{ height: '100%' }}>
-          <div className="tile-caption" style={{ marginTop: 0, fontWeight: 400, fontSize: '1.05rem', color: 'inherit', opacity: 0.95, fontStyle: 'italic' }}>
-            "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work."
-            <div style={{ marginTop: 6, fontStyle: 'normal', fontWeight: 500 }}>— Steve Jobs</div>
+        <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={'#000000'} className="tile--small tile--quote" flipped={flipped} style={{ height: '100%' }}>
+          <div className="tile-caption" aria-hidden>
+            <div className="tile-caption-text">"Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work."</div>
+            <div className="tile-caption-author">— Steve Jobs</div>
           </div>
         </Tile>
       )
