@@ -62,15 +62,19 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
 
 /* Metro-style tiles container */
-.tiles-layout { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 40px repeat(3, 1fr); gap: var(--tile-gap); padding: var(--tiles-padding); height: 100vh; min-width: 1200px; }
+.tiles-layout { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 40px repeat(3, 1fr); gap: var(--tile-gap); padding: var(--tiles-padding); height: 100vh; min-width: 1200px; }
 
 /* thin naming row cells */
 .tile-name { display: flex; align-items: center; justify-content: flex-start; padding-left: 0; height: 40px; color: rgba(255,255,255,0.85); font-weight:400; pointer-events: none; text-align: left; font-size: 1.5rem; }
 
 /* Overall outer layout: main tile area + right scrollable rail */
 /* allow the whole outer layout to scroll horizontally (page-level horizontal scroll) */
-.layout-outer { display: grid; grid-template-columns: 1fr 340px; gap: var(--tile-gap); min-height: auto; overflow-x: auto; }
-.main-area { min-height: 0 }
+.layout-outer { display: grid; /* single column: main section occupies full viewport width */ grid-template-columns: 100vw; gap: var(--tile-gap); min-height: 100vh; overflow-x: auto; }
+.main-area { min-height: 0; width: 100vw }
+
+/* Fresh right column: two-column full-height grid to mirror main area compactly */
+/* Right grid removed */
+
 
 /* Right scrollable sidebar containing a dynamic "live" metro grid */
 .right-scroller { background: rgba(255,255,255,0.03); border-left: 1px solid rgba(255,255,255,0.04); overflow: visible; -webkit-overflow-scrolling: touch; height: auto; padding: var(--tiles-padding); }
@@ -549,6 +553,11 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   /* Smooth touch scrolling */
   .layout-outer, .tiles-layout { -webkit-overflow-scrolling: touch }
 }
+
+/* Ensure small tiles have a sensible minimum height on desktop too (fix invisible resume tile) */
+.tile--small { min-height: 84px; }
+
+/* Debug styles removed */
 
 /* Removed previous global mobile override that conflicted with the two-column dashboard layout.
    Layout for mobile is controlled in the earlier @media (max-width: 720px) block above. */

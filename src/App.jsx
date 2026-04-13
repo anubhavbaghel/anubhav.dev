@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Tile from './components/Tile'
-import ReconstructWords from './components/ReconstructWords'
+import React, { useState } from 'react'
 import LoadingScreen from './components/LoadingScreen'
 import ProjectsPage from './components/ProjectsPage'
 import AboutPage from './components/AboutPage'
+import TilesLayout from './components/TilesLayout'
 import './index.css'
 
 // Minimal App: render exactly 9 Tile components and nothing else
@@ -35,6 +34,7 @@ export default function App() {
     { id: 't7', title: 'Maps', color: '#6A00FF' },
     { id: 't8', title: 'Socials', color: '#2B6CB0' },
     { id: 't9', title: 'Messaging', color: '#D400CC' },
+    { id: 't10', title: 'Resume', color: '#222222' },
   ]
 
   // tiles for the nested 2x2 area (they will share the same gap)
@@ -56,164 +56,13 @@ export default function App() {
       <LoadingScreen />
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
-          <section className="tiles-layout">
-            <div className="tile-name">About Me</div>
-            <div className="tile-name"></div>
-            <div className="tile-name">Skills & Technologies</div>
-            {tiles.map((t) => {
-              if (t.id === 'm1') {
-                return (
-                  <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" style={{ gridColumn: '1 / span 2', gridRow: '2 / span 2' }} flipped={overlayOpen} onActivate={() => setAboutOpen(true)}>
-                      <div>
-                      <ReconstructWords words={["Namaste", "Hola", "Ciao", "Hello"]} />
-                      <div style={{ color: '#000', marginTop: 8, fontWeight: 400 }}>I’m Anubhav</div>
-                      <div id="description" style={{ marginTop: 8, color: '#222', fontWeight: 400, fontSize: "1.5rem" }}>
-                        Frontend Developer who turns ideas into clean and functional web interfaces.
-                      </div>
-                    </div>
-                  </Tile>
-                )
-              }
-              if (t.id === 't3') {
-                return (
-                  <div key="right-nested" className="technical-stack" style={{ gridColumn: '3', gridRow: '2 / span 2' }}>
-                    <div className="tech-heading" aria-hidden>Skill & Technologies</div>
-                    <div className="nested-grid top-right">
-                      {nested.map((n) => {
-                        if (n.id === 'n1') {
-                          return (
-                            <Tile key={n.id} title={n.title} color={'#ffffff'} className="tile--slide tile--react tile--small" flipped={overlayOpen}>
-                              <div className="tile-center-logo" aria-hidden>
-                                <img src={'/assets/React-icon.svg'} alt="React" />
-                              </div>
-                            </Tile>
-                          )
-                        }
-
-                        if (n.id === 'n2') {
-                          return (
-                            <Tile key={n.id} title={n.title} color={n.color} className="tile--js tile--small" flipped={overlayOpen}>
-                              <div className="tile-top-left" aria-hidden>
-                                <div className="typing">console.log('helloworld')</div>
-                              </div>
-                              <div className="tile-bottom-right tile-bottom-right--big" aria-hidden>JS</div>
-                            </Tile>
-                          )
-                        }
-
-                        if (n.id === 'n3') {
-                          return (
-                            <Tile key={n.id} title={n.title} color={'#000000'} className="tile--slide tile--small" flipped={overlayOpen}>
-                              <div className="tile-center-logo" aria-hidden>
-                                <img src={'/assets/Wordpress-Logo.svg'} alt="Wordpress" />
-                              </div>
-                            </Tile>
-                          )
-                        }
-
-                        if (n.id === 'n4') {
-                          return (
-                            <Tile key={n.id} title={n.title} color={'#96BF48'} className="tile--slide tile--small" flipped={overlayOpen}>
-                              <div className="tile-center-logo" aria-hidden>
-                                <img src={'/assets/shopify/shopify_glyph_black.svg'} alt="Shopify" />
-                              </div>
-                            </Tile>
-                          )
-                        }
-
-                        return <Tile key={n.id} title={n.title} color={n.color} flipped={overlayOpen} />
-                      })}
-                    </div>
-                  </div>
-                )
-              }
-
-              if (t.id === 't8') {
-                return (
-                  <div
-                    key={t.id}
-                    className="social-media"
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
-                      gridTemplateRows: '1fr 1fr',
-                      gap: 'var(--tile-gap)',
-                      padding: 0,
-                      background: 'transparent',
-                    }}
-                  >
-                    <a key={`${t.id}-b-1`} href="https://www.threads.com/@code.anubhav" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small tile--threads" style={{ background: '#ffffff', padding: '10%' }} flipped={overlayOpen}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
-                        </div>
-                      </Tile>
-                    </a>
-                    <a key={`${t.id}-b-2`} href="https://github.com/anubhavbaghel" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small tile--github" style={{ background: '#ffffff', padding: 0 }} flipped={overlayOpen}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
-                        </div>
-                      </Tile>
-                    </a>
-                    <a key={`${t.id}-b-3`} href="https://www.linkedin.com/in/anubhav-baghel/" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small tile--linkedin" style={{ background: '#ffffff', padding: '10%' }} flipped={overlayOpen}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
-                        </div>
-                      </Tile>
-                    </a>
-                    <a key={`${t.id}-b-4`} href="mailto:code.anubhavbaghel@gmail.com" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small" style={{ background: '#ffffff', padding: '10%' }} flipped={overlayOpen}>
-                        <div className="tile-center-logo" aria-hidden>
-                          <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
-                        </div>
-                      </Tile>
-                    </a>
-                  </div>
-                )
-              }
-
-              if (t.id === 't7') return (
-                <Tile key={t.id} title={'Projects'} subtitle={t.subtitle} color={t.color} className="tile--medium" flipped={overlayOpen} onActivate={() => setProjectsOpen(true)}>
-                  <div className="tile-title" style={{ fontWeight: 400 }}>Projects</div>
-                  <button
-                    className="ms-arrow-ne"
-                    aria-label="Open external"
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); /* leave overlay toggle to tile click */ }}
-                  >
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                      <path d="M14 3h7v7" />
-                      <path d="M10 14L21 3" />
-                    </svg>
-                  </button>
-                </Tile>
-              )
-              if (t.id === 't9') {
-                return (
-                  <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={'#000000'} className="tile--small" flipped={overlayOpen}>
-                    <div className="tile-caption" style={{ marginTop: 8, fontWeight: 400, fontSize: '1.05rem', color: 'inherit', opacity: 0.95, fontStyle: 'italic' }}>
-                      "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work."
-                      <div style={{ marginTop: 6, fontStyle: 'normal', fontWeight: 500 }}>— Steve Jobs</div>
-                    </div>
-                  </Tile>
-                )
-              }
-              return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} flipped={overlayOpen} />
-            })}
-          </section>
+          <TilesLayout tiles={tiles} nested={nested} flipped={projectsOpen} onOpenProjects={() => setProjectsOpen(true)} onOpenAbout={() => setAboutOpen(true)} />
         </main>
-        
-        {projectsOpen ? (
-          <ProjectsPage onClose={closeProjects} />
-        ) : null}
 
-        {aboutOpen ? (
-          <AboutPage onClose={closeAbout} />
-        ) : null}
+        {projectsOpen ? <ProjectsPage onClose={closeProjects} /> : null}
+        {aboutOpen ? <AboutPage onClose={closeAbout} /> : null}
 
-        {/* right-scroller removed */}
+        {/* RightGrid removed per request */}
       </div>
     </div>
   )
