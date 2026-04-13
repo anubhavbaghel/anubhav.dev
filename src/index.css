@@ -57,19 +57,29 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   background-attachment: fixed;
   background-size: cover;
 }
-.app-root { padding: 0 0 0; min-height: 100vh }
+.app-root { padding: 0; max-height: 100vh; overflow: auto }
 .app-header { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: transparent; color: #fff; display: flex; align-items: center; padding: 0 20px; z-index: 50 }
 .app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
 
-/* Metro-style tiles container */
-.tiles-layout { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 40px repeat(3, 1fr); gap: var(--tile-gap); padding: var(--tiles-padding); height: 100vh; min-width: 1200px; }
+/* Metro-style tiles container: use four column sections (row on desktop, stacked on mobile) */
+.tiles-layout { display: flex; gap: var(--tile-gap); padding: var(--tiles-padding); height: 100%; min-width: 1200px; }
+.tiles-column { display: flex; flex-direction: column; gap: var(--tile-gap); min-height: 100% }
+.tiles-column.left-column { flex: 2 }
+.tiles-column.middle-column, .tiles-column.right-column { flex: 1 }
+.tiles-column .tile-name { height: 40px }
+.tiles-column-inner { display: grid; gap: var(--tile-gap); /* inner grid for column contents */ flex: 1 1 auto; grid-template-rows: repeat(3, 1fr) }
+
+/* Make dashboard/about tile fill the full column width and use natural height */
+.tiles-column-inner .tile--dashboard { width: 100%; height: auto; aspect-ratio: auto }
+.tiles-column-inner .tile { width: 100%; }
+
 
 /* thin naming row cells */
 .tile-name { display: flex; align-items: center; justify-content: flex-start; padding-left: 0; height: 40px; color: rgba(255,255,255,0.85); font-weight:400; pointer-events: none; text-align: left; font-size: 1.5rem; }
 
 /* Overall outer layout: main tile area + right scrollable rail */
 /* allow the whole outer layout to scroll horizontally (page-level horizontal scroll) */
-.layout-outer { display: grid; /* single column: main section occupies full viewport width */ grid-template-columns: 100vw; gap: var(--tile-gap); min-height: 100vh; overflow-x: auto; }
+.layout-outer { display: grid; /* single column: main section occupies full viewport width */ grid-template-columns: 100vw; gap: var(--tile-gap); min-height: 100%; overflow-x: auto; }
 .main-area { min-height: 0; width: 100vw }
 
 /* Fresh right column: two-column full-height grid to mirror main area compactly */
@@ -84,13 +94,13 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .live-grid .tile { padding: 0; min-height: 0; display:flex; align-items: stretch; width: 100%; height: 100% }
 .live-grid .tile { padding: 0; min-height: 0; display:flex; align-items: stretch }
 
-./* Nested 2x2 grid used when a tile area is split into 4 smaller tiles */
+/* Nested 2x2 grid used when a tile area is split into 4 smaller tiles */
 .technical-stack { height: 100%; min-height: 0; position: relative }
 .nested-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: var(--tile-gap); height: 100% }
 .nested-grid .tile { padding: 0; min-height: 0; display: flex; align-items: stretch }
 
-/* Left column: 2x2 grid */
-.left-column { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: var(--tile-gap); height: 100% }
+/* Left column previously used a 2x2 grid; use flex column instead */
+.left-column { display: flex; flex-direction: column; gap: var(--tile-gap); height: 100% }
 .left-column .tile { display: flex; align-items: stretch; padding: 0; min-height: 0 }
 
 /* Right column: two rows of 2 tiles each */
@@ -127,6 +137,9 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   font-weight: 500;
 }
 
+/* Quote caption inside small tile: reduce size and center vertically */
+.tile-caption { font-size: 0.95rem; line-height: 1.4; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box }
+
 /* small bottom-right label inside a tile (used for tech names like JavaScript) */
 .tile-bottom-right { position: absolute; right: 8px; bottom: 0px; width: 120px; display: flex; align-items: center; justify-content: center; z-index: 3; pointer-events: none; font-weight: 600; font-size: 0.95rem; color: #323330; background: rgba(255,255,255,0.02); border-radius: 2px; padding: 6px }
 
@@ -135,7 +148,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 
 /* larger variant for short tech abbreviations like 'JS' */
-.tile-bottom-right--big { font-size: clamp(6rem, 3.8vw, 1.6rem); font-weight: 700; padding: 0px; letter-spacing: 0.6px }
+.tile-bottom-right--big { font-size: 3rem; font-weight: 700; padding: 0px; letter-spacing: 0.6px }
 
 @media (max-width: 920px) {
   .tile-bottom-right { width: 88px; right: 10px; bottom: 10px; font-size: 0.85rem; padding: 4px }
@@ -209,6 +222,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile--linkedin .tile-center-logo img { transition: filter 200ms linear, transform 200ms linear; filter: invert(1) brightness(2); }
 .tile--linkedin:hover { background: #0A66C2 !important; }
 .tile--linkedin:hover .tile-center-logo img { filter: invert(1) brightness(2); }
+
+/* Contact tiles: Windows 8.1 style accent and white icons */
+.tile--contact { color: #fff; }
+.tile--contact .tile-title, .tile--contact .tile-caption { color: #fff; }
+.tile--contact .tile-center-logo img { filter: brightness(0) invert(1); transition: filter 160ms ease; }
+
 
 /* Prevent text selection inside the tiles/layout to avoid accidental highlights while interacting */
 .tiles-layout, .tiles-layout .tile, .tiles-layout .tile * {
@@ -331,7 +350,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .vertical-slider { height: 28px; overflow: hidden; margin-top: 6px }
 .vertical-slider ul { list-style: none; margin: 0; padding: 0; display: block; will-change: transform }
 .vertical-slider li { height: 28px; line-height: 1; display: block; font-size: inherit; font-weight: 500; white-space: nowrap; font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif }
-.vertical-slider { /* ensure the container doesn't collapse when font-size is large */ }
+/* ensure the container doesn't collapse when font-size is large */
 
 /* discrete step animation: show each word, hold, then jump to next (no smooth scrolling) */
 @keyframes slide-vertical {
@@ -363,7 +382,6 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .role-rotator ul { animation: none; }
 
 /* subtle hover lift */
-.tile:hover { /* no movement - image will change on hover */ }
 
 /* 3D flip faces: front + back */
 .tile-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: block }
@@ -438,10 +456,21 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile:hover .tile-image { opacity: 0.2 }
 
 @media (max-width: 920px) {
-  .tiles-layout { grid-template-columns: 1fr; }
-  .left-column { order: 1 }
-  .right-column { order: 2 }
+  /* Stack columns vertically on small screens and ensure About (left-column) is first */
+  .tiles-layout { flex-direction: column; align-items: stretch; }
+  .tiles-column { width: 100%; }
+  .tiles-column.left-column { order: 1 }
+  .tiles-column.middle-column { order: 2 }
+  .tiles-column.right-column { order: 3 }
   .right-row { grid-template-columns: repeat(2, 1fr) }
+
+  /* Ensure About/dashboard is prominent on mobile */
+  /* make entire left/about column at least 50vh, and dashboard tile fills it */
+  .tiles-column.left-column { min-height: 50vh; }
+  .tiles-column.left-column .tile--dashboard { min-height: 100%; }
+
+  /* Make the Phone tile label smaller on phones (override inline style) */
+  .tiles-column.left-column a[href^="tel:"] .tile-title { font-size: 1rem !important; }
 }
 
 @media (max-width: 420px) {
@@ -460,7 +489,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Responsive: on smaller screens use vertical scrolling instead of horizontal */
 @media (max-width: 900px) {
   .layout-outer { overflow-x: visible; overflow-y: auto; grid-template-columns: 1fr; }
-  .tiles-layout { height: auto; grid-template-columns: 1fr; grid-template-rows: none; min-width: auto; }
+  .tiles-layout { height: auto; flex-direction: column; min-width: auto; }
 }
 
 /* Windows 8.1-style loading overlay */
@@ -509,11 +538,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   :root { --tile-gap: 10px; --tiles-padding: 12px }
 
   /* Mobile: vertical mosaic single-column flow */
+  /* Use a single-column flow on small screens */
   .layout-outer { grid-template-columns: 1fr; overflow-x: hidden; overflow-y: auto }
 
   .tiles-layout {
     display: grid;
-    grid-template-columns: 1fr; /* single column flow for mosaic */
+    grid-template-columns: 1fr; /* single column on phones */
     grid-auto-rows: auto;
     gap: var(--tile-gap);
     padding: var(--tiles-padding);

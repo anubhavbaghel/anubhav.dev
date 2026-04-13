@@ -46,7 +46,7 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
   const renderTile = (t) => {
     if (t.id === 'm1') {
       return (
-        <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" style={{ gridColumn: '1 / span 2', gridRow: '2 / span 2' }} flipped={flipped} onActivate={onOpenAbout}>
+        <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" flipped={flipped} onActivate={onOpenAbout} style={{ gridRow: 'span 2' }}>
           <div>
             <ReconstructWords words={["Namaste", "Hola", "Ciao", "Hello"]} />
             <div style={{ color: '#000', marginTop: 8, fontWeight: 400 }}>I’m Anubhav</div>
@@ -60,8 +60,7 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
 
     if (t.id === 't3') {
       return (
-        <div key="right-nested" className="technical-stack" style={{ gridColumn: '3', gridRow: '2 / span 2' }}>
-          {showLabels ? <div className="tech-heading" aria-hidden>Skill & Technologies</div> : null}
+        <div key="right-nested" className="technical-stack">
           <div className="nested-grid top-right">{renderNested(nested)}</div>
         </div>
       )
@@ -118,8 +117,8 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
 
     if (t.id === 't9') {
       return (
-        <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={'#000000'} className="tile--small" flipped={flipped} style={{ gridColumn: '1', gridRow: '4' }}>
-          <div className="tile-caption" style={{ marginTop: 8, fontWeight: 400, fontSize: '1.05rem', color: 'inherit', opacity: 0.95, fontStyle: 'italic' }}>
+        <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={'#000000'} className="tile--small" flipped={flipped} style={{ height: '100%' }}>
+          <div className="tile-caption" style={{ marginTop: 0, fontWeight: 400, fontSize: '1.05rem', color: 'inherit', opacity: 0.95, fontStyle: 'italic' }}>
             "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work."
             <div style={{ marginTop: 6, fontStyle: 'normal', fontWeight: 500 }}>— Steve Jobs</div>
           </div>
@@ -129,7 +128,7 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
 
     if (t.id === 't10') {
       return (
-        <div key={t.id} style={{ gridColumn: '2', gridRow: '4', display: 'grid', gridTemplateRows: '1fr 1fr', gap: 'var(--tile-gap)', width: '100%', height: '100%' }}>
+        <div key={t.id} style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: 'var(--tile-gap)', width: '100%', height: '100%' }}>
           <a href="/assets/Anubhav_Baghel_Resume.pdf" download="Anubhav_Baghel_Resume.pdf" style={{ display: 'block', width: '100%', height: '100%' }}>
             <Tile title={t.title} color={t.color} className="tile--small" flipped={flipped} style={{ height: '100%' }}>
               <div style={{ padding: 12 }}>
@@ -140,17 +139,17 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--tile-gap)', width: '100%', height: '100%' }}>
             <a href="tel:+919873181404" style={{ display: 'block', width: '100%', height: '100%' }}>
-              <Tile title="Phone" color={'#111'} className="tile--small" flipped={flipped} style={{ height: '100%' }}>
-                <div style={{ padding: 12 }}>
-                  <div className="tile-title" style={{ fontWeight: 400, fontSize: '2rem' }}>Phone</div>
+              <Tile title="Phone" color={'#00ADEF'} className="tile--small tile--contact tile--phone" flipped={flipped} style={{ height: '100%' }}>
+                <div className="tile-center-logo" aria-hidden>
+                  <img src={'/assets/call-svgrepo-com.svg'} alt="Phone" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                 </div>
               </Tile>
             </a>
 
             <a href="mailto:code.anubhavbaghel@gmail.com" style={{ display: 'block', width: '100%', height: '100%' }}>
-              <Tile title="Mail" color={'#111'} className="tile--small" flipped={flipped} style={{ height: '100%' }}>
-                <div style={{ padding: 12 }}>
-                  <div className="tile-title" style={{ fontWeight: 400, fontSize: '2rem' }}>Mail</div>
+              <Tile title="Mail" color={'#00ADEF'} className="tile--small tile--contact tile--mail" flipped={flipped} style={{ height: '100%' }}>
+                <div className="tile-center-logo" aria-hidden>
+                  <img src={'/assets/mail-svgrepo-com.svg'} alt="Mail" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                 </div>
               </Tile>
             </a>
@@ -162,17 +161,44 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
     return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} flipped={flipped} />
   }
 
+  // group tiles into four columns; this lets each column be an independent section
+  const byId = (id) => tiles.find((x) => x.id === id)
+  const m1Tile = byId('m1')
+  const quoteTile = byId('t9')
+  const resumeTile = byId('t10')
+  // merge into left column ordering: dashboard (m1) then bottom row with quote + resume/contact
+  // technical stack belongs in Skills & Technologies (middle column)
+  const colMiddle = [byId('t3')].filter(Boolean)
+  // Projects (t7) should live in the Projects column; include socials alongside projects
+  const colRight = [byId('t7'), byId('t8')].filter(Boolean)
+
   return (
     <section className="tiles-layout">
-      {showLabels ? (
-        <>
-          <div className="tile-name">About Me</div>
-          <div className="tile-name"></div>
-          <div className="tile-name">Skills & Technologies</div>
-          <div className="tile-name">Projects</div>
-        </>
-      ) : null}
-      {tiles.map((t) => renderTile(t))}
+      <div className="tiles-column left-column">
+        {showLabels ? <div className="tile-name">About Me</div> : null}
+        <div className="tiles-column-inner">
+          {m1Tile ? renderTile(m1Tile) : null}
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--tile-gap)', width: '100%', height: '100%' }}>
+            {quoteTile ? renderTile(quoteTile) : null}
+            {resumeTile ? renderTile(resumeTile) : null}
+          </div>
+        </div>
+      </div>
+
+      <div className="tiles-column middle-column">
+        {showLabels ? <div className="tile-name">Skills & Technologies</div> : null}
+        <div className="tiles-column-inner">
+          {colMiddle.map((t) => renderTile(t))}
+        </div>
+      </div>
+
+      <div className="tiles-column right-column">
+        {showLabels ? <div className="tile-name">Projects</div> : null}
+        <div className="tiles-column-inner">
+          {colRight.map((t) => renderTile(t))}
+        </div>
+      </div>
     </section>
   )
 }
