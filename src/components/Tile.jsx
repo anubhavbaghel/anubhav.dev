@@ -9,7 +9,7 @@ function hexToLuminance(hex) {
   return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]
 }
 
-export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children, className = '' }) {
+export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children, className = '', flipped = false, onActivate }) {
   const ref = useRef(null)
   const [tilt, setTilt] = useState(null)
 
@@ -17,6 +17,7 @@ export default function Tile({ title, subtitle, color = '#444', size = 'small', 
   const textColor = luminance > 0.5 ? '#111' : '#fff'
 
   const handleClick = (e) => {
+    if (flipped) return
     const el = ref.current
     if (!el) return
     const rect = el.getBoundingClientRect()
@@ -31,6 +32,9 @@ export default function Tile({ title, subtitle, color = '#444', size = 'small', 
     else if (vertical !== 0) setTilt({ axis: 'x', dir: -vertical })
     else setTilt({ axis: 'y', dir: x < rect.width / 2 ? -1 : 1 })
 
+    // call activation callback if provided
+    if (typeof onActivate === 'function') onActivate(e)
+
     // reset after animation
     window.setTimeout(() => setTilt(null), 260)
   }
@@ -44,23 +48,27 @@ export default function Tile({ title, subtitle, color = '#444', size = 'small', 
   return (
     <div
       ref={ref}
-      className={`tile ${size} ${className}`.trim()}
+      className={`tile ${size} ${className} ${flipped ? 'flipped' : ''}`.trim()}
       onClick={handleClick}
-      style={{ background: color, color: textColor, ...(typeof style === 'object' ? style : {}), ...tiltStyle }}
+      style={{ background: color, color: textColor, ...(typeof style === 'object' ? style : {}), ...(!flipped ? tiltStyle : {}) }}
     >
-      {image ? (
-        <div className="tile-image" style={{ backgroundImage: `url(${image})` }} />
-      ) : null}
+      <div className="tile-face tile-face--front" aria-hidden>
+        {image ? (
+          <div className="tile-image" style={{ backgroundImage: `url(${image})` }} />
+        ) : null}
 
-      {hoverImage ? (
-        <div className="tile-image-hover" style={{ backgroundImage: `url(${hoverImage})` }} />
-      ) : null}
+        {hoverImage ? (
+          <div className="tile-image-hover" style={{ backgroundImage: `url(${hoverImage})` }} />
+        ) : null}
 
-      <div className="tile-icon" aria-hidden>
-        {/* placeholder icon - replace with SVG or image */}
+        <div className="tile-icon" aria-hidden>
+        </div>
+        {children ? <div className="tile-content">{children}</div> : null}
       </div>
-      {/* title/subtitle intentionally omitted — tiles show no text */}
-      {children ? <div className="tile-content">{children}</div> : null}
+
+      <div className="tile-face tile-face--back" aria-hidden>
+        {/* black backface - intentionally empty to show black page */}
+      </div>
     </div>
   )
 }

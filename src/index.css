@@ -361,6 +361,59 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* subtle hover lift */
 .tile:hover { /* no movement - image will change on hover */ }
 
+/* 3D flip faces: front + back */
+.tile-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: block }
+.tile-face--front { z-index: 2 }
+.tile-face--back { transform: rotateY(180deg); z-index: 1; background: #000; }
+.tile.flipped { transform: perspective(900px) rotateY(180deg); }
+
+/* full-screen black overlay shown when projects are open */
+.projects-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0.98;
+  z-index: 100000;
+  transition: opacity 260ms ease;
+  pointer-events: auto;
+}
+
+/* while overlay visible, make tiles non-interactive to avoid accidental clicks */
+.app-root.projects-open .tiles-layout .tile,
+.app-root.projects-open .live-grid .tile {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* disable transform transition briefly when returning from Projects so tiles don't animate back */
+.app-root.no-flip .tile { transition: none !important }
+
+/* Projects full page styling */
+.projects-page {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  z-index: 100001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.projects-page__inner { max-width: 1100px; width: 100%; }
+.projects-page__close { position: absolute; right: 20px; top: 18px; background: transparent; color: #fff; border: none; font-size: 26px; cursor: pointer }
+.projects-page__title { font-size: 3rem; margin: 0 0 8px 0 }
+.projects-page__intro { color: rgba(255,255,255,0.8); margin-bottom: 24px }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px }
+.project-card { background: rgba(255,255,255,0.04); padding: 18px; border-radius: 6px; min-height: 140px }
+.project-card h2 { margin: 0 0 6px 0 }
+.project-card p { margin: 0; color: rgba(255,255,255,0.7) }
+
+@media (max-width: 900px) {
+  .projects-grid { grid-template-columns: 1fr }
+  .projects-page__title { font-size: 2rem }
+}
+
 /* tile image layers: base and hover; hover layer fades in */
 .tile-image, .tile-image-hover { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transition: opacity 220ms ease }
 .tile-image { opacity: 1 }

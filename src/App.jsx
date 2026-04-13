@@ -2,10 +2,22 @@ import React, { useEffect, useRef, useState } from 'react'
 import Tile from './components/Tile'
 import ReconstructWords from './components/ReconstructWords'
 import LoadingScreen from './components/LoadingScreen'
+import ProjectsPage from './components/ProjectsPage'
 import './index.css'
 
 // Minimal App: render exactly 9 Tile components and nothing else
 export default function App() {
+  const [projectsOpen, setProjectsOpen] = useState(false)
+  const [noFlip, setNoFlip] = useState(false)
+
+  const closeProjects = () => {
+    setNoFlip(true)
+    setProjectsOpen(false)
+    // remove the noFlip flag shortly after render to restore transitions
+    requestAnimationFrame(() => {
+      setTimeout(() => setNoFlip(false), 80)
+    })
+  }
   // Merge top-left 2x2 area into a single tile (replaces t1,t2,t4,t5)
   const tiles = [
     { id: 'm1', title: 'Dashboard', color: '#00A4CC' },
@@ -29,7 +41,7 @@ export default function App() {
   // RoleRotator removed per request
 
   return (
-    <div className="app-root">
+    <div className={`app-root ${projectsOpen ? 'projects-open' : ''} ${noFlip ? 'no-flip' : ''}`}>
       <LoadingScreen />
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
@@ -40,7 +52,7 @@ export default function App() {
             {tiles.map((t) => {
               if (t.id === 'm1') {
                 return (
-                  <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" style={{ gridColumn: '1 / span 2', gridRow: '2 / span 2' }}>
+                  <Tile key={t.id} color={t.color} className="tile--dashboard tile--large" style={{ gridColumn: '1 / span 2', gridRow: '2 / span 2' }} flipped={projectsOpen}>
                       <div>
                       <ReconstructWords words={["Namaste", "Hola", "Ciao", "Hello"]} />
                       <div style={{ color: '#000', marginTop: 8, fontWeight: 400 }}>I’m Anubhav</div>
@@ -59,7 +71,7 @@ export default function App() {
                       {nested.map((n) => {
                         if (n.id === 'n1') {
                           return (
-                            <Tile key={n.id} title={n.title} color={'#ffffff'} className="tile--slide tile--react tile--small">
+                            <Tile key={n.id} title={n.title} color={'#ffffff'} className="tile--slide tile--react tile--small" flipped={projectsOpen}>
                               <div className="tile-center-logo" aria-hidden>
                                 <img src={'/assets/React-icon.svg'} alt="React" />
                               </div>
@@ -69,7 +81,7 @@ export default function App() {
 
                         if (n.id === 'n2') {
                           return (
-                            <Tile key={n.id} title={n.title} color={n.color} className="tile--js tile--small">
+                            <Tile key={n.id} title={n.title} color={n.color} className="tile--js tile--small" flipped={projectsOpen}>
                               <div className="tile-top-left" aria-hidden>
                                 <div className="typing">console.log('helloworld')</div>
                               </div>
@@ -80,7 +92,7 @@ export default function App() {
 
                         if (n.id === 'n3') {
                           return (
-                            <Tile key={n.id} title={n.title} color={'#000000'} className="tile--slide tile--small">
+                            <Tile key={n.id} title={n.title} color={'#000000'} className="tile--slide tile--small" flipped={projectsOpen}>
                               <div className="tile-center-logo" aria-hidden>
                                 <img src={'/assets/Wordpress-Logo.svg'} alt="Wordpress" />
                               </div>
@@ -90,7 +102,7 @@ export default function App() {
 
                         if (n.id === 'n4') {
                           return (
-                            <Tile key={n.id} title={n.title} color={'#96BF48'} className="tile--slide tile--small">
+                            <Tile key={n.id} title={n.title} color={'#96BF48'} className="tile--slide tile--small" flipped={projectsOpen}>
                               <div className="tile-center-logo" aria-hidden>
                                 <img src={'/assets/shopify/shopify_glyph_black.svg'} alt="Shopify" />
                               </div>
@@ -98,7 +110,7 @@ export default function App() {
                           )
                         }
 
-                        return <Tile key={n.id} title={n.title} color={n.color} />
+                        return <Tile key={n.id} title={n.title} color={n.color} flipped={projectsOpen} />
                       })}
                     </div>
                   </div>
@@ -120,28 +132,28 @@ export default function App() {
                     }}
                   >
                     <a key={`${t.id}-b-1`} href="https://www.threads.com/@code.anubhav" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small tile--threads" style={{ background: '#ffffff', padding: '10%' }}>
+                      <Tile color={'#ffffff'} className="tile--small tile--threads" style={{ background: '#ffffff', padding: '10%' }} flipped={projectsOpen}>
                         <div className="tile-center-logo" aria-hidden>
                           <img src={'/assets/Socials/Threads_(app)_logo.svg'} alt="Threads" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                         </div>
                       </Tile>
                     </a>
                     <a key={`${t.id}-b-2`} href="https://github.com/anubhavbaghel" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small tile--github" style={{ background: '#ffffff', padding: 0 }}>
+                      <Tile color={'#ffffff'} className="tile--small tile--github" style={{ background: '#ffffff', padding: 0 }} flipped={projectsOpen}>
                         <div className="tile-center-logo" aria-hidden>
                           <img src={'/assets/Socials/GitHub_Invertocat_Black_Clearspace.svg'} alt="GitHub" style={{ width: '80%', height: '80%', objectFit: 'contain' }} />
                         </div>
                       </Tile>
                     </a>
                     <a key={`${t.id}-b-3`} href="https://www.linkedin.com/in/anubhav-baghel/" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small tile--linkedin" style={{ background: '#ffffff', padding: '10%' }}>
+                      <Tile color={'#ffffff'} className="tile--small tile--linkedin" style={{ background: '#ffffff', padding: '10%' }} flipped={projectsOpen}>
                         <div className="tile-center-logo" aria-hidden>
                           <img src={'/assets/Socials/linkedin-svgrepo-com.svg'} alt="LinkedIn" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                         </div>
                       </Tile>
                     </a>
                     <a key={`${t.id}-b-4`} href="mailto:code.anubhavbaghel@gmail.com" style={{ display: 'block', width: '100%', height: '100%' }}>
-                      <Tile color={'#ffffff'} className="tile--small" style={{ background: '#ffffff', padding: '10%' }}>
+                      <Tile color={'#ffffff'} className="tile--small" style={{ background: '#ffffff', padding: '10%' }} flipped={projectsOpen}>
                         <div className="tile-center-logo" aria-hidden>
                           <img src={'/assets/Socials/Gmail_icon_(2020).svg'} alt="Gmail" style={{ width: '50%', height: '50%', objectFit: 'contain' }} />
                         </div>
@@ -152,13 +164,13 @@ export default function App() {
               }
 
               if (t.id === 't7') return (
-                <Tile key={t.id} title={'Projects'} subtitle={t.subtitle} color={t.color} className="tile--medium">
+                <Tile key={t.id} title={'Projects'} subtitle={t.subtitle} color={t.color} className="tile--medium" flipped={projectsOpen} onActivate={() => setProjectsOpen(true)}>
                   <div className="tile-title" style={{ fontWeight: 400 }}>Projects</div>
                   <button
                     className="ms-arrow-ne"
                     aria-label="Open external"
                     type="button"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => { e.stopPropagation(); /* leave overlay toggle to tile click */ }}
                   >
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                       <path d="M14 3h7v7" />
@@ -177,10 +189,14 @@ export default function App() {
                   </Tile>
                 )
               }
-              return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} />
+              return <Tile key={t.id} title={t.title} subtitle={t.subtitle} color={t.color} flipped={projectsOpen} />
             })}
           </section>
         </main>
+        
+        {projectsOpen ? (
+          <ProjectsPage onClose={closeProjects} />
+        ) : null}
 
         {/* right-scroller removed */}
       </div>
@@ -238,6 +254,23 @@ if (typeof window !== 'undefined') {
     update()
     window.addEventListener('resize', update)
   })
+}
+
+// close on Escape when open — attach via event listener to avoid multiple handlers
+if (typeof window !== 'undefined') {
+  const _escHandler = (e) => {
+    if (e.key !== 'Escape') return
+    const root = document.querySelector('.app-root')
+    if (!root || !root.classList.contains('projects-open')) return
+    // trigger closeProjects by clicking the close button if present, else simulate overlay click
+    const closeBtn = document.querySelector('.projects-page__close')
+    if (closeBtn) closeBtn.click()
+    else {
+      const overlay = document.querySelector('.projects-overlay')
+      if (overlay) overlay.click()
+    }
+  }
+  window.addEventListener('keydown', _escHandler)
 }
 
 // Microsoft-style northeast arrow button (bottom-right)
