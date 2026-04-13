@@ -233,6 +233,10 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile--contact .tile-title, .tile--contact .tile-caption { color: #fff; }
 .tile--contact .tile-center-logo img { filter: invert(1) brightness(2); transition: filter 160ms ease; }
 
+/* Resume tile: center content vertically and horizontally */
+.tile--resume .tile-content { align-items: center; justify-content: center; }
+.tile--resume .tile-title { text-align: center }
+
 
 /* Prevent text selection inside the tiles/layout to avoid accidental highlights while interacting */
 .tiles-layout, .tiles-layout .tile, .tiles-layout .tile * {
