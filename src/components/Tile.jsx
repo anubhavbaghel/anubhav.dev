@@ -14,7 +14,12 @@ export default function Tile({ title, subtitle, color = '#444', size = 'small', 
   const [tilt, setTilt] = useState(null)
 
   const luminance = hexToLuminance(color)
-  const textColor = luminance > 0.5 ? '#111' : '#fff'
+  let textColor = luminance > 0.5 ? '#111' : '#fff'
+
+  // Force white text for contact tiles (icon + label should be white on accent)
+  if (typeof className === 'string' && className.indexOf('tile--contact') !== -1) {
+    textColor = '#fff'
+  }
 
   const handleClick = (e) => {
     if (flipped) return

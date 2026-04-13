@@ -226,7 +226,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Contact tiles: Windows 8.1 style accent and white icons */
 .tile--contact { color: #fff; }
 .tile--contact .tile-title, .tile--contact .tile-caption { color: #fff; }
-.tile--contact .tile-center-logo img { filter: brightness(0) invert(1); transition: filter 160ms ease; }
+.tile--contact .tile-center-logo img { filter: invert(1) brightness(2); transition: filter 160ms ease; }
 
 
 /* Prevent text selection inside the tiles/layout to avoid accidental highlights while interacting */
