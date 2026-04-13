@@ -604,6 +604,11 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   .layout-outer, .tiles-layout { -webkit-overflow-scrolling: touch }
 }
 
+/* Make quote caption smaller on narrow mobile screens */
+@media (max-width: 420px) {
+  .tile-caption { font-size: 0.7rem; }
+}
+
 /* Ensure small tiles have a sensible minimum height on desktop too (fix invisible resume tile) */
 .tile--small { min-height: 84px; }
 
