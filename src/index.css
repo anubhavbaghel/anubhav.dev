@@ -465,9 +465,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   .right-row { grid-template-columns: repeat(2, 1fr) }
 
   /* Ensure About/dashboard is prominent on mobile */
-  /* make entire left/about column at least 50vh, and dashboard tile fills it */
-  .tiles-column.left-column { min-height: 50vh; }
-  .tiles-column.left-column .tile--dashboard { min-height: 100%; }
+  /* On small screens let the About/dashboard tile size to its content */
+  .tiles-column.left-column { min-height: 0; }
+  .tiles-column.left-column .tile--dashboard { min-height: auto; height: auto; aspect-ratio: auto; align-items: flex-start; }
+
+  /* ensure large tiles collapse to content height on phones */
+  .tiles-layout .tile--large, .tiles-layout .tile--dashboard { height: auto !important; }
 
   /* Make the Phone tile label smaller on phones (override inline style) */
   .tiles-column.left-column a[href^="tel:"] .tile-title { font-size: 1rem !important; }
