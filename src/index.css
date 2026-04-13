@@ -166,6 +166,30 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   .tile-bottom-right--big { width: 64px; font-size: 1.1rem; padding: 6px }
 }
 
+/* Apply JS large bottom-right label sizing/offsets only on small screens (mobile) */
+@media (max-width: 720px) {
+  /* Desktop: position JS large label slightly inset */
+  .tile .tile-bottom-right--big {
+    right: 5px;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+    width: auto;
+  }
+
+  /* Mobile: force JS label to be 3rem with no padding and flush to bottom-right */
+  @media (max-width: 720px) {
+    .tile .tile-bottom-right--big {
+      font-size: 3rem !important;
+      padding: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      margin: 0 !important;
+      width: auto !important;
+    }
+  }
+}
+
 /* image + label inside bottom-right container */
 .tile-bottom-right img { width: 40px; height: 40px; display: block }
 .tile-bottom-right--big img { width: 56px; height: 56px }
