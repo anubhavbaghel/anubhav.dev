@@ -64,7 +64,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Metro-style tiles container: use four column sections (row on desktop, stacked on mobile) */
 .tiles-layout { display: flex; gap: var(--tile-gap); padding: var(--tiles-padding); height: 100%; min-width: 1200px; }
 .tiles-column { display: flex; flex-direction: column; gap: var(--tile-gap); min-height: 100% }
-.tiles-column.left-column { flex: 2 }
+.tiles-column.left-column { flex: 2; min-height: 50vh }
 .tiles-column.middle-column, .tiles-column.right-column { flex: 1 }
 .tiles-column .tile-name { height: 40px }
 .tiles-column-inner { display: grid; gap: var(--tile-gap); /* inner grid for column contents */ flex: 1 1 auto; grid-template-rows: repeat(3, 1fr) }
@@ -72,6 +72,11 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 /* Make dashboard/about tile fill the full column width and use natural height */
 .tiles-column-inner .tile--dashboard { width: 100%; height: auto; aspect-ratio: auto }
 .tiles-column-inner .tile { width: 100%; }
+
+/* Desktop: ensure the About/dashboard tile is visually prominent */
+@media (max-width: 721px) {
+  .tiles-column.left-column { min-height: 50vh !important; }
+}
 
 
 /* thin naming row cells */
@@ -227,6 +232,10 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile--contact { color: #fff; }
 .tile--contact .tile-title, .tile--contact .tile-caption { color: #fff; }
 .tile--contact .tile-center-logo img { filter: invert(1) brightness(2); transition: filter 160ms ease; }
+
+/* Resume tile: center content vertically and horizontally */
+.tile--resume .tile-content { align-items: center; justify-content: center; }
+.tile--resume .tile-title { text-align: center }
 
 
 /* Prevent text selection inside the tiles/layout to avoid accidental highlights while interacting */
@@ -389,6 +398,14 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile-face--back { transform: rotateY(180deg); z-index: 1; background: #000; }
 .tile.flipped { transform: perspective(900px) rotateY(180deg); }
 
+/* Allow the dashboard/about tile to size to its inner content
+  by making its faces participate in normal flow instead of
+  being absolutely positioned. This lets description text
+  expand the tile height naturally. */
+.tile--dashboard .tile-face { position: relative; inset: auto; }
+.tile--dashboard .tile-content { position: static; padding: 0px; pointer-events: auto; }
+.tile--dashboard { align-items: flex-start; padding: 0; }
+
 /* full-screen black overlay shown when projects are open */
 .projects-overlay {
   position: fixed;
@@ -465,9 +482,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   .right-row { grid-template-columns: repeat(2, 1fr) }
 
   /* Ensure About/dashboard is prominent on mobile */
-  /* make entire left/about column at least 50vh, and dashboard tile fills it */
-  .tiles-column.left-column { min-height: 50vh; }
-  .tiles-column.left-column .tile--dashboard { min-height: 100%; }
+  /* On small screens let the About/dashboard tile size to its content */
+  .tiles-column.left-column { min-height: 0; }
+  .tiles-column.left-column .tile--dashboard { min-height: auto; height: auto; aspect-ratio: auto; align-items: flex-start; }
+
+  /* ensure large tiles collapse to content height on phones */
+  .tiles-layout .tile--large, .tiles-layout .tile--dashboard { height: auto !important; }
 
   /* Make the Phone tile label smaller on phones (override inline style) */
   .tiles-column.left-column a[href^="tel:"] .tile-title { font-size: 1rem !important; }

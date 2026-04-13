@@ -130,7 +130,7 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
       return (
         <div key={t.id} style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: 'var(--tile-gap)', width: '100%', height: '100%' }}>
           <a href="/assets/Anubhav_Baghel_Resume.pdf" download="Anubhav_Baghel_Resume.pdf" style={{ display: 'block', width: '100%', height: '100%' }}>
-            <Tile title={t.title} color={t.color} className="tile--small" flipped={flipped} style={{ height: '100%' }}>
+            <Tile title={t.title} color={t.color} className="tile--small tile--resume" flipped={flipped} style={{ height: '100%' }}>
               <div style={{ padding: 12 }}>
                 <div className="tile-title" style={{ fontWeight: 400, fontSize: '2rem' }}>Resume</div>
               </div>
