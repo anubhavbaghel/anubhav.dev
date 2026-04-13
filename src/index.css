@@ -389,6 +389,14 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile-face--back { transform: rotateY(180deg); z-index: 1; background: #000; }
 .tile.flipped { transform: perspective(900px) rotateY(180deg); }
 
+/* Allow the dashboard/about tile to size to its inner content
+  by making its faces participate in normal flow instead of
+  being absolutely positioned. This lets description text
+  expand the tile height naturally. */
+.tile--dashboard .tile-face { position: relative; inset: auto; }
+.tile--dashboard .tile-content { position: static; padding: 0px; pointer-events: auto; }
+.tile--dashboard { align-items: flex-start; padding: 0; }
+
 /* full-screen black overlay shown when projects are open */
 .projects-overlay {
   position: fixed;
