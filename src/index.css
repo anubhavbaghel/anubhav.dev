@@ -166,6 +166,30 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   .tile-bottom-right--big { width: 64px; font-size: 1.1rem; padding: 6px }
 }
 
+/* Apply JS large bottom-right label sizing/offsets only on small screens (mobile) */
+@media (max-width: 720px) {
+  /* Desktop: position JS large label slightly inset */
+  .tile .tile-bottom-right--big {
+    right: 5px;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+    width: auto;
+  }
+
+  /* Mobile: force JS label to be 3rem with no padding and flush to bottom-right */
+  @media (max-width: 720px) {
+    .tile .tile-bottom-right--big {
+      font-size: 3rem !important;
+      padding: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      margin: 0 !important;
+      width: auto !important;
+    }
+  }
+}
+
 /* image + label inside bottom-right container */
 .tile-bottom-right img { width: 40px; height: 40px; display: block }
 .tile-bottom-right--big img { width: 56px; height: 56px }
@@ -413,52 +437,30 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile--dashboard { align-items: flex-start; padding: 0; }
 
 /* full-screen black overlay shown when projects are open */
-.projects-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  opacity: 0.98;
-  z-index: 100000;
-  transition: opacity 260ms ease;
-  pointer-events: auto;
-}
-
-/* while overlay visible, make tiles non-interactive to avoid accidental clicks */
-.app-root.projects-open .tiles-layout .tile,
-.app-root.projects-open .live-grid .tile {
-  pointer-events: none;
-  user-select: none;
-}
+/* overlay styles removed — Projects is now a dedicated page */
 
 /* disable transform transition briefly when returning from Projects so tiles don't animate back */
 .app-root.no-flip .tile { transition: none !important }
 
 /* Projects full page styling */
 .projects-page {
-  position: fixed;
-  inset: 0;
-  background: #000;
+  position: relative;
+  background: transparent;
   color: #fff;
   z-index: 100001;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
+  padding: 48px 32px;
 }
-.projects-page__inner { max-width: 1100px; width: 100%; }
-.projects-page__close { position: absolute; right: 20px; top: 18px; background: transparent; color: #fff; border: none; font-size: 26px; cursor: pointer }
-.projects-page__heading { position: absolute; left: 24px; top: 18px; margin: 0; font-size: 3rem; font-weight: 400; line-height: 1; text-transform: capitalize }
-
-.projects-list {
-  position: absolute;
-  left: 24px;
-  top: calc(18px + 5rem + 12px);
-  margin: 0;
-  padding-left: 1.25rem;
-  color: rgba(255,255,255,0.95);
-  font-size: 2rem;
-  font-weight: 400;
-}
+.projects-page__inner { max-width: 1200px; width: 100%; margin: 0 auto }
+.projects-main { display: flex; gap: var(--tile-gap); align-items: flex-start; width: 100%; min-height: 70vh }
+.projects-left { flex: 1 1 auto; max-width: calc(100% - 50vw); }
+.projects-right { width: 50vw; min-height: 60vh; display: flex; align-items: center; justify-content: center; }
+.projects-showcase { width: 100%; height: 100%; background: rgba(255,255,255,0.03); border-radius: 4px; display:flex; align-items:center; justify-content:center }
+.projects-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.projects-page__heading { margin: 0; font-size: 2.25rem; font-weight: 600; text-transform: capitalize }
+.projects-page__close { background: transparent; color: #fff; border: none; font-size: 28px; cursor: pointer }
+.projects-left-body { margin-top: 18px }
+.projects-icons { display: flex; flex-direction: column; gap: 12px }
+.projects-icon { width: 48px; height: 48px; display: inline-flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.04); border: none; color: #fff; font-size: 1.25rem; border-radius: 6px; cursor: pointer }
 .projects-list__item { margin: 8px 0 }
 
 @media (max-width: 900px) {
