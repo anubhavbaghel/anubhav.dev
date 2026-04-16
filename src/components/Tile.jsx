@@ -9,7 +9,7 @@ function hexToLuminance(hex) {
   return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]
 }
 
-export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children, className = '', flipped = false, onActivate }) {
+export default function Tile({ title, subtitle, color = '#444', size = 'small', image, hoverImage, style, children, className = '', flipped = false, onActivate, noTilt = false }) {
   const ref = useRef(null)
   const [tilt, setTilt] = useState(null)
 
@@ -25,6 +25,12 @@ export default function Tile({ title, subtitle, color = '#444', size = 'small', 
     if (flipped) return
     const el = ref.current
     if (!el) return
+
+    if (noTilt) {
+      if (typeof onActivate === 'function') onActivate(e)
+      return
+    }
+
     const rect = el.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top

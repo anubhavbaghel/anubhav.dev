@@ -437,22 +437,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile--dashboard { align-items: flex-start; padding: 0; }
 
 /* full-screen black overlay shown when projects are open */
-.projects-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  z-index: 100000;
-  transition: opacity 260ms ease;
-  pointer-events: auto;
-  overflow: auto;
-}
-
-/* while overlay visible, make tiles non-interactive to avoid accidental clicks */
-.app-root.projects-open .tiles-layout .tile,
-.app-root.projects-open .live-grid .tile {
-  pointer-events: none;
-  user-select: none;
-}
+/* overlay styles removed — Projects is now a dedicated page */
 
 /* disable transform transition briefly when returning from Projects so tiles don't animate back */
 .app-root.no-flip .tile { transition: none !important }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import LoadingScreen from './components/LoadingScreen'
 import ProjectsPage from './components/ProjectsPage'
 import AboutPage from './components/AboutPage'
@@ -13,7 +13,7 @@ export default function App() {
 
   const closeProjects = () => {
     setNoFlip(true)
-    setProjectsOpen(false)
+    if (typeof window !== 'undefined') window.location.hash = ''
     // remove the noFlip flag shortly after render to restore transitions
     requestAnimationFrame(() => {
       setTimeout(() => setNoFlip(false), 80)
@@ -51,15 +51,26 @@ export default function App() {
 
   const overlayOpen = projectsOpen || aboutOpen
 
+  useEffect(() => {
+    const update = () => setProjectsOpen(typeof window !== 'undefined' && window.location.hash === '#projects')
+    update()
+    window.addEventListener('hashchange', update)
+    return () => window.removeEventListener('hashchange', update)
+  }, [])
+
+  const openProjects = () => { if (typeof window !== 'undefined') window.location.hash = '#projects' }
+
   return (
     <div className={`app-root ${overlayOpen ? 'projects-open' : ''} ${noFlip ? 'no-flip' : ''}`}>
       <LoadingScreen />
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
-          <TilesLayout tiles={tiles} nested={nested} flipped={projectsOpen} onOpenProjects={() => setProjectsOpen(true)} onOpenAbout={() => setAboutOpen(true)} />
+          {!projectsOpen && (
+            <TilesLayout tiles={tiles} nested={nested} flipped={projectsOpen} onOpenProjects={openProjects} onOpenAbout={() => setAboutOpen(true)} />
+          )}
         </main>
 
-        {projectsOpen ? <ProjectsPage onClose={closeProjects} /> : null}
+        {projectsOpen ? <ProjectsPage /> : null}
         {aboutOpen ? <AboutPage onClose={closeAbout} /> : null}
 
         {/* RightGrid removed per request */}
