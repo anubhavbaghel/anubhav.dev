@@ -305,6 +305,14 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   filter: invert(1) brightness(140%);
 }
 
+/* Heatmap color scale (used by react-calendar-heatmap via classForValue) */
+.color-empty, rect.color-empty, .react-calendar-heatmap rect.color-empty { fill: #000000 !important; stroke: #3b3b3b !important; }
+.color-github-1, rect.color-github-1, .react-calendar-heatmap rect.color-github-1 { fill: #c6e48b !important; }
+.color-github-2, rect.color-github-2, .react-calendar-heatmap rect.color-github-2 { fill: #7bc96f !important; }
+.color-github-3, rect.color-github-3, .react-calendar-heatmap rect.color-github-3 { fill: #239a3b !important; }
+.color-github-4, rect.color-github-4, .react-calendar-heatmap rect.color-github-4 { fill: #196127 !important; }
+
+
 /* Rotate React svg 90deg on hover (scoped to the slide tiles) */
 .tile.tile--slide .tile-center-logo img[src*="React-icon.svg"] {
   transition: transform 360ms ease;

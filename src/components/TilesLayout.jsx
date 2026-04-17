@@ -1,6 +1,7 @@
 import React from 'react'
 import Tile from './Tile'
 import ReconstructWords from './ReconstructWords'
+import CalHeatmap from './CalHeatmap'
 
 export default function TilesLayout({ tiles = [], nested = [], flipped = false, onOpenProjects = () => {}, onOpenAbout = () => {}, showLabels = true }) {
   const renderNested = (items) => items.map((n) => {
@@ -60,8 +61,9 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
 
     if (t.id === 't3') {
       return (
-        <div key="right-nested" className="technical-stack">
+        <div key={t.id} className="technical-stack" style={{ display: 'grid', gridTemplateRows: '1fr auto', gap: 'var(--tile-gap)' }}>
           <div className="nested-grid top-right">{renderNested(nested)}</div>
+          {/* Activity heatmap moved to middle column (second row) */}
         </div>
       )
     }
@@ -194,6 +196,14 @@ export default function TilesLayout({ tiles = [], nested = [], flipped = false, 
         {showLabels ? <div className="tile-name">Skills & Technologies</div> : null}
         <div className="tiles-column-inner">
           {colMiddle.map((t) => renderTile(t))}
+          {/* Second row: Activity heatmap tile */}
+          <Tile title="Activity" color={'#ffffff'} className="tile--small tile--github-heatmap" flipped={false} style={{ background: 'transparent' }}>
+            <div style={{ padding: 8, width: '100%', height: '100%' }}>
+              <a href="https://github.com/anubhavbaghel" target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', height: '100%', pointerEvents: 'auto' }}>
+                <CalHeatmap />
+              </a>
+            </div>
+          </Tile>
         </div>
       </div>
 
