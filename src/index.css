@@ -121,6 +121,13 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile--projects .tile-title { padding-left: 12px; padding-top: 12px }
 .tile-sub { margin-top: 6px; color: inherit; opacity: 0.95; font-size: 1rem; font-weight: 600 }
 
+/* Ensure Certifications tile doesn't shrink on small/mobile screens */
+.tile--certifications { min-height: 140px; height: auto !important; align-items: flex-start; }
+
+@media (max-width: 720px) {
+  .tile--certifications { min-height: 120px !important; height: auto !important; align-items: flex-start; }
+}
+
 /* Heading visually attached to the technical-stack tile without affecting layout */
 .technical-stack .tech-heading {
   position: absolute;
