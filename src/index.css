@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
 :root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32 }
@@ -645,12 +645,21 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 
 .certifications-page__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border: 1px solid rgba(255,255,255,0.16);
-  padding: 16px;
+  padding: 14px 16px;
   font-size: 1.05rem;
   color: rgba(255,255,255,0.92);
+  border-radius: 8px;
 }
+
+.certifications-page__item-title { flex: 1 1 auto; font-weight: 600 }
+.certifications-page__item-issuer { flex: 0 0 auto; margin-left: 12px; color: rgba(255,255,255,0.75); font-weight: 400 }
+.certifications-page__verify { margin-left: 14px; color: #cbe7ff; text-decoration: underline; font-size: 0.95rem }
 
 /* About page styles */
 .about-page { position: fixed; inset: 0; background: #000; color: #fff; z-index: 100001; display: flex; align-items: flex-start; justify-content: flex-start; padding: 40px }
