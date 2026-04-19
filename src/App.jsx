@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import LoadingScreen from './components/LoadingScreen'
 import ProjectsPage from './components/ProjectsPage'
 import AboutPage from './components/AboutPage'
+import CertificationsPage from './components/CertificationsPage'
 import TilesLayout from './components/TilesLayout'
 import './index.css'
 
 // Minimal App: render exactly 9 Tile components and nothing else
 export default function App() {
   const [projectsOpen, setProjectsOpen] = useState(false)
+  const [certificationsOpen, setCertificationsOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [noFlip, setNoFlip] = useState(false)
 
@@ -22,6 +24,13 @@ export default function App() {
   const closeAbout = () => {
     setNoFlip(true)
     setAboutOpen(false)
+    requestAnimationFrame(() => {
+      setTimeout(() => setNoFlip(false), 80)
+    })
+  }
+  const closeCertifications = () => {
+    setNoFlip(true)
+    if (typeof window !== 'undefined') window.location.hash = ''
     requestAnimationFrame(() => {
       setTimeout(() => setNoFlip(false), 80)
     })
@@ -42,35 +51,41 @@ export default function App() {
     { id: 'n1', title: 'React', color: '#8AD4FF' },
     { id: 'n2', title: 'Javascript', color: '#F0DB4F' },
     { id: 'n3', title: 'Wordpress', color: '#FFB3B3' },
-    { id: 'n4', title: 'Shopify', color: '#C8A2FF' },
+    { id: 'n5', title: 'Expo', color: '#1e1e1e' },
   ]
 
   // right-scroller removed — live tiles handled elsewhere if needed
 
   // RoleRotator removed per request
 
-  const overlayOpen = projectsOpen || aboutOpen
+  const overlayOpen = projectsOpen || certificationsOpen || aboutOpen
 
   useEffect(() => {
-    const update = () => setProjectsOpen(typeof window !== 'undefined' && window.location.hash === '#projects')
+    const update = () => {
+      const hash = typeof window !== 'undefined' ? window.location.hash : ''
+      setProjectsOpen(hash === '#projects')
+      setCertificationsOpen(hash === '#certifications')
+    }
     update()
     window.addEventListener('hashchange', update)
     return () => window.removeEventListener('hashchange', update)
   }, [])
 
   const openProjects = () => { if (typeof window !== 'undefined') window.location.hash = '#projects' }
+  const openCertifications = () => { if (typeof window !== 'undefined') window.location.hash = '#certifications' }
 
   return (
-    <div className={`app-root ${overlayOpen ? 'projects-open' : ''} ${noFlip ? 'no-flip' : ''}`}>
+    <div className={`app-root ${projectsOpen ? 'projects-open' : ''} ${certificationsOpen ? 'certifications-open' : ''} ${noFlip ? 'no-flip' : ''}`}>
       <LoadingScreen />
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
-          {!projectsOpen && (
-            <TilesLayout tiles={tiles} nested={nested} flipped={projectsOpen} onOpenProjects={openProjects} onOpenAbout={() => setAboutOpen(true)} />
+          {!projectsOpen && !certificationsOpen && (
+            <TilesLayout tiles={tiles} nested={nested} flipped={overlayOpen} onOpenProjects={openProjects} onOpenCertifications={openCertifications} onOpenAbout={() => setAboutOpen(true)} />
           )}
         </main>
 
         {projectsOpen ? <ProjectsPage /> : null}
+        {certificationsOpen ? <CertificationsPage onClose={closeCertifications} /> : null}
         {aboutOpen ? <AboutPage onClose={closeAbout} /> : null}
 
         {/* RightGrid removed per request */}
@@ -136,9 +151,9 @@ if (typeof window !== 'undefined') {
   const _escHandler = (e) => {
     if (e.key !== 'Escape') return
     const root = document.querySelector('.app-root')
-    if (!root || !root.classList.contains('projects-open')) return
+    if (!root || (!root.classList.contains('projects-open') && !root.classList.contains('certifications-open'))) return
     // trigger closeProjects by clicking the close button if present, else simulate overlay click
-    const closeBtn = document.querySelector('.projects-page__close')
+    const closeBtn = document.querySelector('.projects-page__close') || document.querySelector('.certifications-page__close')
     if (closeBtn) closeBtn.click()
     else {
       const overlay = document.querySelector('.projects-overlay')

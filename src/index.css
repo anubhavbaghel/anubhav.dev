@@ -331,6 +331,53 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile.tile--js.tile--slide::after { background: transparent; transform: translateY(100%); transition: transform 360ms ease, background 200ms linear; z-index: 1 }
 .tile.tile--js.tile--slide:hover::after { transform: translateY(0%); background: #000 }
 
+/* Expo/Android auto-flip tile */
+.tile--expo-flip .tile-content {
+  pointer-events: none;
+}
+
+.expo-flip-card {
+  position: absolute;
+  inset: 8px;
+  transform-style: preserve-3d;
+  transition: transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.expo-flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.expo-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.expo-flip-icon {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+}
+
+.expo-flip-face--front {
+  background: linear-gradient(140deg, #0f172a, #1d4ed8);
+  color: #e5edff;
+}
+
+.expo-flip-face--back {
+  transform: rotateY(180deg);
+  background: linear-gradient(140deg, #0a1a0a, #1f7a1f);
+  color: #d8ffd8;
+}
+
 /* Top-left small typing line inside a tile (used for JS tile) */
 .tile-top-left { position: absolute; left: 10px; top: 8px; z-index: 6; pointer-events: none; color: rgba(255,255,255,0.9); font-family: 'Host Grotesk', monospace; font-size: 0.9rem }
 .tile--js .tile-top-left { color: #F0DB4F } /* yellow on JS tile */
@@ -549,6 +596,60 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 @media (max-width: 900px) {
   .projects-page__grid { grid-template-columns: 1fr; }
+}
+
+/* Certifications page */
+.certifications-page {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  color: #fff;
+  padding: clamp(20px, 3vw, 40px);
+}
+
+.certifications-page__inner {
+  max-width: 1100px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 18px;
+}
+
+.certifications-page__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.certifications-page__close {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.certifications-page__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.certifications-page__content {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.certifications-page__item {
+  background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.16);
+  padding: 16px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.92);
 }
 
 /* About page styles */

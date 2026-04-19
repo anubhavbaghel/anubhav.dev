@@ -2,6 +2,42 @@ import React from "react";
 import Tile from "./Tile";
 import ReconstructWords from "./ReconstructWords";
 import CalHeatmap from "./CalHeatmap";
+import androidLogo from "../../assets/Android_logo_2019_(stacked).svg";
+
+function ExpoAndroidFlipTile({ id, title }) {
+  const [showAndroid, setShowAndroid] = React.useState(false);
+  const expoIconUrl = "https://upload.wikimedia.org/wikipedia/commons/9/95/Expo_App_Logo.svg";
+
+  React.useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setShowAndroid((prev) => !prev);
+    }, 4200);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
+  return (
+    <Tile
+      key={id}
+      title={title}
+      color={"#0f1117"}
+      className="tile--small tile--expo-flip"
+      flipped={false}
+    >
+      <div
+        className={`expo-flip-card ${showAndroid ? "is-flipped" : ""}`}
+        aria-hidden
+      >
+        <div className="expo-flip-face expo-flip-face--front">
+          <img src={expoIconUrl} alt="Expo" className="expo-flip-icon" />
+        </div>
+        <div className="expo-flip-face expo-flip-face--back">
+          <img src={androidLogo} alt="Android" className="expo-flip-icon" />
+        </div>
+      </div>
+    </Tile>
+  );
+}
 
 export default function TilesLayout({
   tiles = [],
@@ -9,6 +45,7 @@ export default function TilesLayout({
   flipped = false,
   onOpenProjects = () => {},
   onOpenAbout = () => {},
+  onOpenCertifications = () => {},
   showLabels = true,
 }) {
   const renderNested = (items) =>
@@ -62,23 +99,8 @@ export default function TilesLayout({
               </div>
             </Tile>
           );
-        case "n4":
-          return (
-            <Tile
-              key={n.id}
-              title={n.title}
-              color={"#96BF48"}
-              className="tile--slide tile--small"
-              flipped={false}
-            >
-              <div className="tile-center-logo" aria-hidden>
-                <img
-                  src={"/assets/shopify/shopify_glyph_black.svg"}
-                  alt="Shopify"
-                />
-              </div>
-            </Tile>
-          );
+        case "n5":
+          return <ExpoAndroidFlipTile key={n.id} id={n.id} title={n.title} />;
         default:
           return (
             <Tile key={n.id} title={n.title} color={n.color} flipped={false} />
@@ -476,11 +498,39 @@ export default function TilesLayout({
                 </div>
               </div>
             </Tile>
+
+          <Tile
+            title="Certifications and Achievements"
+            color={"#111111"}
+            className="tile--small tile--certifications"
+            flipped={false}
+            noTilt={true}
+            onActivate={onOpenCertifications}
+            style={{ background: "rgba(0,0,0,0.72)", border: "1px solid rgba(255,255,255,0.14)" }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "start",
+                textAlign: "left",
+                padding: "16px",
+                color: "rgba(255,255,255,0.92)",
+                fontSize: "2rem",
+                fontWeight: 400,
+                lineHeight: 1.3,
+              }}
+            >
+              Certifications and Achievements
+            </div>
+          </Tile>
         </div>
       </div>
 
       <div className="tiles-column right-column">
-        {showLabels ? <div className="tile-name">Projects</div> : null}
+        {showLabels ? <div className="tile-name" >Projects</div> : null}
         <div className="tiles-column-inner">
           {colRight.map((t) => renderTile(t))}
         </div>
