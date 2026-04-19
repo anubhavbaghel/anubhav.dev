@@ -52,20 +52,29 @@ export default function CalHeatmap({ values: valuesProp }) {
   }, [])  
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ position: 'relative', width: '100%', height: '100%' , display: 'flex', flexDirection: 'column'}}>
+        <div
+          role="heading"
+          aria-level={3}
+          tabIndex={-1}
+          style={{ padding: '0px 0px 6px 0px', fontSize: '1.5rem', fontWeight: 400, color: 'rgba(255,255,255,0.85)', cursor: 'default', userSelect: 'none' }}
+        >
+          Github
+        </div>
         {isLoading && (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', zIndex: 5 }}>
-            <div style={{ padding: 8, background: 'rgba(255,255,255,0.85)', borderRadius: 6, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', fontSize: 13 }}>Loading contributions…</div>
+            <div style={{ padding: 0, background: 'rgba(255,255,255,0.85)', borderRadius: 6, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', fontSize: 13 }}>Loading contributions…</div>
           </div>
         )}
         {fetchError && (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', zIndex: 5 }}>
-            <div style={{ padding: 8, background: 'rgba(255,230,230,0.95)', borderRadius: 6, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', fontSize: 13, color: '#800' }}>Error loading contributions</div>
+            <div style={{ padding: 0, background: 'rgba(255,230,230,0.95)', borderRadius: 6, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', fontSize: 13, color: '#800' }}>Error loading contributions</div>
           </div>
         )}
 
-        <CalendarHeatmap
+        <div style={{ flex: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'stretch' }}>
+          <CalendarHeatmap
         startDate={start}
         endDate={new Date()}
         values={finalValues}
@@ -113,7 +122,8 @@ export default function CalHeatmap({ values: valuesProp }) {
             title: rect.props && rect.props.title ? rect.props.title : (aria || undefined),
           })
         }}
-      />
+          />
+        </div>
       </div>
     </div>
   )
