@@ -353,8 +353,8 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 6px 8px;
+  border-radius: 2px; /* match .tile */
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.4px;
