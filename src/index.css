@@ -118,6 +118,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .tile .tile-icon { position: absolute; left: 12px; top: 12px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.95 }
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
 .tile-title { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2px }
+.tile--projects .tile-title { padding-left: 12px; padding-top: 12px }
 .tile-sub { margin-top: 6px; color: inherit; opacity: 0.95; font-size: 1rem; font-weight: 600 }
 
 /* Heading visually attached to the technical-stack tile without affecting layout */

@@ -3,10 +3,11 @@ import Tile from "./Tile";
 import ReconstructWords from "./ReconstructWords";
 import CalHeatmap from "./CalHeatmap";
 import androidLogo from "../../assets/Android_logo_2019_(stacked).svg";
+import expoIcon from "../../assets/light-expo-svgrepo-com.svg";
 
 function ExpoAndroidFlipTile({ id, title }) {
   const [showAndroid, setShowAndroid] = React.useState(false);
-  const expoIconUrl = "https://upload.wikimedia.org/wikipedia/commons/9/95/Expo_App_Logo.svg";
+  const expoIconUrl = expoIcon || "/assets/Expo_App_Logo.svg";
 
   React.useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -269,7 +270,7 @@ export default function TilesLayout({
           title={"Projects"}
           subtitle={t.subtitle}
           color={t.color}
-          className="tile--medium"
+          className="tile--medium tile--projects"
           flipped={false}
           noTilt={true}
           onActivate={onOpenProjects}
