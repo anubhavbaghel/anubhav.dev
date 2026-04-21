@@ -400,9 +400,9 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 
 /* Welcome screen: full-viewport black overlay with rotating greetings */
-.welcome-screen { position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 280ms ease, transform 280ms ease; transform: translateY(0%); will-change: opacity, transform }
-.welcome-screen.is-hidden { opacity: 0; transform: translateY(-100%); pointer-events: none }
-.welcome-screen.is-visible { opacity: 1; transform: translateY(0%); pointer-events: auto }
+.welcome-screen { position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; transition: transform 700ms cubic-bezier(0.22,0.9,0.36,1); transform: translateY(0%); will-change: transform }
+.welcome-screen.is-hidden { transform: translateY(-110%); pointer-events: none }
+.welcome-screen.is-visible { transform: translateY(0%); pointer-events: auto }
 .welcome-inner { display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px }
 .welcome-text { color: #ffffff; font-weight: 400; line-height: 1; font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', system-ui, -apple-system, Roboto, Arial, sans-serif; letter-spacing: 0.6px; font-size: 3rem; transition: transform 220ms ease, opacity 180ms ease; will-change: transform, opacity }
 

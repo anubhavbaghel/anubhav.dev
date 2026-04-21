@@ -19,15 +19,15 @@ export default function WelcomeScreen({ autoDismissMs = 3000, cycleMs = 600, onF
 
   useEffect(() => {
     const cycle = setInterval(() => setIndex(i => (i + 1) % GREETINGS.length), cycleMs)
-    // ensure the welcome screen is fully removed at autoDismissMs
-    const fadeMs = 280
-    const fadeStart = Math.max(0, autoDismissMs - fadeMs)
-    const timeoutFade = setTimeout(() => setVisible(false), fadeStart)
-    const timeoutFinish = setTimeout(() => onFinish && onFinish(), autoDismissMs)
+    // slide duration should match CSS (700ms) so we unmount after slide ends
+    const slideMs = 700
+    // start sliding up after autoDismissMs (i.e., show for autoDismissMs), then unmount after slideMs
+    const timeoutStartSlide = setTimeout(() => setVisible(false), autoDismissMs)
+    const timeoutFinish = setTimeout(() => onFinish && onFinish(), autoDismissMs + slideMs)
 
     return () => {
       clearInterval(cycle)
-      clearTimeout(timeoutFade)
+      clearTimeout(timeoutStartSlide)
       clearTimeout(timeoutFinish)
     }
   }, [autoDismissMs, cycleMs, onFinish])
