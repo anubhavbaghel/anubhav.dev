@@ -435,6 +435,28 @@ export default function TilesLayout({
       );
     }
 
+      if (t.id === "t11") {
+        return (
+          <Tile
+            key={t.id}
+            title={t.title}
+            color={t.color}
+            className="tile--small"
+            flipped={false}
+            onActivate={onOpenProjects}
+          >
+            <div style={{ padding: 12 }}>
+              <div className="tile-title" style={{ fontWeight: 400, fontSize: "4rem" }}>
+                My work
+              </div>
+              <div style={{ marginTop: 8, fontSize: "0.95rem", opacity: 0.9 }}>
+                Selected projects and case studies
+              </div>
+            </div>
+          </Tile>
+        );
+      }
+
     return (
       <Tile
         key={t.id}
@@ -454,8 +476,8 @@ export default function TilesLayout({
   // merge into left column ordering: dashboard (m1) then bottom row with quote + resume/contact
   // technical stack belongs in Skills & Technologies (middle column)
   const colMiddle = [byId("t3")].filter(Boolean);
-  // Projects (t7) should live in the Projects column; include socials alongside projects
-  const colRight = [byId("t7"), byId("t8")].filter(Boolean);
+  // Projects (t7) should live in the Projects column; include socials and a 'My work' tile alongside projects
+  const colRight = [byId("t7"), byId("t8"), byId("t11")].filter(Boolean);
 
   return (
     <section className="tiles-layout">
