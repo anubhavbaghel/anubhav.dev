@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import LoadingScreen from './components/LoadingScreen'
+import WelcomeScreen from './components/WelcomeScreen'
 import ProjectsPage from './components/ProjectsPage'
 import AboutPage from './components/AboutPage'
 import CertificationsPage from './components/CertificationsPage'
@@ -59,6 +59,10 @@ export default function App() {
   // RoleRotator removed per request
 
   const overlayOpen = projectsOpen || certificationsOpen || aboutOpen
+  const [showWelcome, setShowWelcome] = useState(true)
+
+  // show welcome on each full page load / refresh
+  const handleWelcomeFinish = () => setShowWelcome(false)
 
   useEffect(() => {
     const update = () => {
@@ -76,7 +80,7 @@ export default function App() {
 
   return (
     <div className={`app-root ${projectsOpen ? 'projects-open' : ''} ${certificationsOpen ? 'certifications-open' : ''} ${noFlip ? 'no-flip' : ''}`}>
-      <LoadingScreen />
+      {showWelcome ? <WelcomeScreen onFinish={handleWelcomeFinish} /> : null}
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
           {!projectsOpen && !certificationsOpen && (
