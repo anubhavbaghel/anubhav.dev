@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 const GREETINGS = [
-  'Helli',
+  'Hello',
   'नमस्ते',
   'Hola',
   '你好',
