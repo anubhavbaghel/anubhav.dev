@@ -338,7 +338,7 @@ export default function TilesLayout({
           }}
         >
           <a
-            href="/assets/Anubhav_Baghel_Resume.pdf"
+            href="/assets/Anubhav_Wordpress_Dev_Resume.pdf"
             download="Anubhav_Baghel_Resume.pdf"
             style={{ display: "block", width: "100%", height: "100%" }}
           >
