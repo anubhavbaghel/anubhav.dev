@@ -241,19 +241,21 @@ export default function TilesLayout({
           </a>
           <a
             key={`${t.id}-b-4`}
-            href="mailto:code.anubhavbaghel@gmail.com"
+            href="https://leetcode.com/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ display: "block", width: "100%", height: "100%" }}
           >
             <Tile
               color={"#ffffff"}
-              className="tile--small"
+              className="tile--small tile--leetcode"
               style={{ background: "#ffffff", padding: "10%" }}
               flipped={false}
             >
               <div className="tile-center-logo" aria-hidden>
                 <img
-                  src={"/assets/Socials/Gmail_icon_(2020).svg"}
-                  alt="Gmail"
+                  src={"/assets/Socials/leetcode.png"}
+                  alt="LeetCode"
                   style={{ width: "50%", height: "50%", objectFit: "contain" }}
                 />
               </div>
