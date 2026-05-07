@@ -114,7 +114,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .right-grid .tile { padding: 0; min-height: 0 }
 
 /* Metro tile styling: flat, sharp corners, large labels */
-.tile { border-radius: 2px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end; transform-style: preserve-3d; will-change: transform; transition: transform 220ms ease }
+.tile { border-radius: 10px; color: #fff; display:flex; position: relative; overflow: hidden; align-items: stretch; justify-content: flex-end; transform-style: preserve-3d; will-change: transform; transition: transform 220ms ease }
 .tile .tile-icon { position: absolute; left: 12px; top: 12px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.95 }
 .tile .tile-footer { padding: 16px; z-index: 2; align-self: end }
 .tile-title { font-size: 1.4rem; font-weight: 600; letter-spacing: 0.2px }
