@@ -331,7 +331,7 @@ export default function TilesLayout({
           key={t.id}
           style={{
             display: "grid",
-            gridTemplateRows: "1fr 1fr",
+            gridTemplateRows: "2fr 1fr",
             gap: "var(--tile-gap)",
             width: "100%",
             height: "100%",
