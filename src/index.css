@@ -618,10 +618,13 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   -webkit-backdrop-filter: blur(12px);
   padding: 48px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 40px;
   position: relative;
   overflow: hidden;
-  min-height: 75vh;
+  height: 80vh;
+  align-self: flex-end;
+  margin-bottom: 24px;
   flex: 1;
   min-width: 0; /* prevents flex child from expanding beyond container width */
   animation: showcaseFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -629,9 +632,14 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 @media (max-width: 900px) {
   .projects-page__showcase {
+    flex-direction: column;
     height: auto;
     min-height: 60vh;
     align-self: stretch;
+  }
+  .project-showcase__browser {
+    max-width: 100% !important;
+    min-height: 360px;
   }
 }
 
@@ -644,6 +652,63 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   height: 4px;
   background: linear-gradient(90deg, var(--sky-mid), var(--sky-bottom));
 }
+
+.project-showcase__info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.project-showcase__browser {
+  flex: 1;
+  max-width: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+  aspect-ratio: 16 / 10;
+  align-self: center; /* prevents vertical stretching, respecting aspect ratio */
+}
+
+.browser-header {
+  height: 32px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+}
+
+.browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+.browser-dot.red { background: #ff5f56; }
+.browser-dot.yellow { background: #ffbd2e; }
+.browser-dot.green { background: #27c93f; }
+
+.browser-iframe-wrapper {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.browser-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 300%;
+  transform: scale(0.333333);
+  transform-origin: top left;
+  background: #fff;
+  border: none;
+}
+
 .project-showcase__title {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.2rem);

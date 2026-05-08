@@ -9,7 +9,7 @@ export default function ProjectsPage() {
       title: 'What is happening in my City',
       desc: 'City discovery app that combines nearby events, places, and map-based browsing with location-aware hooks.',
       stack: ['React', 'Maps API', 'Serverless API' , 'Vercel'],
-      link: 'https://github.com/anubhavbaghel/WhatIsHappeningInMyCity'
+      link: 'https://whatishappeninginmycity.vercel.app/'
     },
     {
       id: 'p2',
@@ -79,28 +79,43 @@ export default function ProjectsPage() {
         </div>
 
         <div className="projects-page__showcase" key={activeProject.id}>
-          <div className="project-card__header-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-            </svg>
+          <div className="project-showcase__info">
+            <div className="project-card__header-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+
+            <h2 className="project-showcase__title">{activeProject.title}</h2>
+            <p className="project-showcase__desc">{activeProject.desc}</p>
+
+            <div className="project-card__tags" aria-label="Tech stack">
+              {activeProject.stack.map(tech => (
+                <span key={tech} className="project-card__tag">{tech}</span>
+              ))}
+            </div>
+
+            <div className="project-showcase__footer">
+              {activeProject.link ? (
+                <a href={activeProject.link} target="_blank" rel="noopener noreferrer" className="project-card__link">View project</a>
+              ) : (
+                <span className="project-card__muted">Private repository</span>
+              )}
+            </div>
           </div>
 
-          <h2 className="project-showcase__title">{activeProject.title}</h2>
-          <p className="project-showcase__desc">{activeProject.desc}</p>
-
-          <div className="project-card__tags" aria-label="Tech stack">
-            {activeProject.stack.map(tech => (
-              <span key={tech} className="project-card__tag">{tech}</span>
-            ))}
-          </div>
-
-          <div className="project-showcase__footer">
-            {activeProject.link ? (
-              <a href={activeProject.link} target="_blank" rel="noopener noreferrer" className="project-card__link">View project</a>
-            ) : (
-              <span className="project-card__muted">Private repository</span>
-            )}
-          </div>
+          {activeProject.link && (
+            <div className="project-showcase__browser">
+              <div className="browser-header">
+                <span className="browser-dot red"></span>
+                <span className="browser-dot yellow"></span>
+                <span className="browser-dot green"></span>
+              </div>
+              <div className="browser-iframe-wrapper">
+                <iframe src={activeProject.link} title={`${activeProject.title} live preview`} className="browser-iframe" loading="lazy" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
