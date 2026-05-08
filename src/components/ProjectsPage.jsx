@@ -89,15 +89,15 @@ export default function ProjectsPage() {
             <h2 className="project-showcase__title">{activeProject.title}</h2>
             <p className="project-showcase__desc">{activeProject.desc}</p>
 
-            <div className="project-card__tags" aria-label="Tech stack">
+            <div className="project-showcase__tags" aria-label="Tech stack">
               {activeProject.stack.map(tech => (
-                <span key={tech} className="project-card__tag">{tech}</span>
+                <span key={tech} className="project-showcase__tag">{tech}</span>
               ))}
             </div>
 
             <div className="project-showcase__footer">
               {activeProject.link ? (
-                <a href={activeProject.link} target="_blank" rel="noopener noreferrer" className="project-card__link">View project</a>
+                <a href={activeProject.link} target="_blank" rel="noopener noreferrer" className="project-showcase__link">View live project</a>
               ) : (
                 <span className="project-card__muted">Private repository</span>
               )}

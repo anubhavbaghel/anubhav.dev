@@ -610,13 +610,12 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 
 .projects-page__showcase {
-  border-radius: 16px;
-  background: linear-gradient(145deg, rgba(25, 30, 38, 0.8) 0%, rgba(12, 14, 18, 0.9) 100%);
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 48px;
+  border-radius: 12px;
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 40px;
   display: flex;
   flex-direction: row;
   gap: 40px;
@@ -641,16 +640,6 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
     max-width: 100% !important;
     min-height: 360px;
   }
-}
-
-.projects-page__showcase::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--sky-mid), var(--sky-bottom));
 }
 
 .project-showcase__info {
@@ -711,24 +700,64 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 .project-showcase__title {
   margin: 0;
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 600;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 400;
   letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: #fff;
 }
 .project-showcase__desc {
-  margin: 24px 0 0 0;
-  color: rgba(255,255,255,0.75);
+  margin: 16px 0 0 0;
+  color: rgba(255,255,255,0.7);
   line-height: 1.6;
   font-weight: 400;
-  font-size: 1.15rem;
-  max-width: 800px;
+  font-size: 1.05rem;
+  max-width: 100%;
+}
+.project-showcase__tags {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.project-showcase__tag {
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
 }
 .project-showcase__footer {
   margin-top: auto;
-  padding-top: 40px;
+  padding-top: 32px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+}
+.project-showcase__link {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.project-showcase__link::after {
+  content: '→';
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+.project-showcase__link:hover {
+  background: rgba(255,255,255,0.15);
+}
+.project-showcase__link:hover::after {
+  transform: translateX(4px);
 }
 
 .project-card {
