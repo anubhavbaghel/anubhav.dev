@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
-export default function ProjectCard({ title, desc, stack = [], link, screenshots = [], delay = 0 }) {
+function deterministicColor(seed) {
+  // simple hash to deterministic pastel-ish color
+  let h = 0
+  for (let i = 0; i < seed.length; i++) h = (h << 5) - h + seed.charCodeAt(i)
+  const hue = Math.abs(h) % 360
+  return `hsl(${hue} 70% 22%)`
+}
+
+export default function ProjectCard({ title, desc, stack = [], link, screenshots = [], color, delay = 0 }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -14,8 +22,10 @@ export default function ProjectCard({ title, desc, stack = [], link, screenshots
     transition: 'transform 420ms cubic-bezier(0.2,0.9,0.2,1), opacity 360ms ease'
   }
 
+  const bg = color || deterministicColor(title || 'project')
+
   return (
-    <article className="project-card" style={cardStyle}>
+    <article className="project-card" style={{ ...cardStyle, background: bg }}>
       {screenshots && screenshots.length ? (
         <div className="project-card__screenshots" aria-hidden>
           {screenshots.slice(0, 3).map((src, idx) => (

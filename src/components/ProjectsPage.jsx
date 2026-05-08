@@ -27,7 +27,8 @@ export default function ProjectsPage() {
       desc: 'Portfolio / studio site for Flydheera — clean visual design, responsive layout and case-study pages.',
       stack: ['Next.js', 'React', 'Vercel', 'CSS'],
       link: 'https://flydheera.com/',
-      screenshots: ['/assets/projects/flydheera-1.svg', '/assets/projects/flydheera-2.svg']
+      screenshots: ['/assets/projects/flydheera-1.svg', '/assets/projects/flydheera-2.svg'],
+      color: '#7C3AED'
     },
     {
       id: 'p4',
@@ -35,7 +36,8 @@ export default function ProjectsPage() {
       desc: 'E-commerce / brand site for Purava Bath showcasing products with rich imagery and product pages.',
       stack: ['Next.js', 'Shopify', 'React', 'Tailwind'],
       link: 'https://puravabath.com/',
-      screenshots: ['/assets/projects/puravabath-1.svg', '/assets/projects/puravabath-2.svg']
+      screenshots: ['/assets/projects/puravabath-1.svg', '/assets/projects/puravabath-2.svg'],
+      color: '#0EA5A4'
     },
     {
       id: 'p5',
@@ -43,7 +45,8 @@ export default function ProjectsPage() {
       desc: 'Design and portfolio site for WDC Design — showcases case studies and service pages.',
       stack: ['Gatsby', 'React', 'Netlify', 'SCSS'],
       link: 'https://wdc-design-2.vercel.app/',
-      screenshots: ['/assets/projects/wdc-1.svg']
+      screenshots: ['/assets/projects/wdc-1.svg'],
+      color: '#0F172A'
     },
     {
       id: 'p6',
@@ -51,7 +54,8 @@ export default function ProjectsPage() {
       desc: 'An exploration app for GitHub users and repositories with search, filters and lightweight analytics.',
       stack: ['React', 'Vite', 'GitHub API', 'Vercel'],
       link: 'https://github-user-explore-mocha.vercel.app/',
-      screenshots: ['/assets/projects/github-explore-1.svg']
+      screenshots: ['/assets/projects/github-explore-1.svg'],
+      color: '#0366D6'
     }
   ]
 
@@ -65,7 +69,7 @@ export default function ProjectsPage() {
 
         <div className="projects-page__grid">
           {projects.map((p, i) => (
-            <ProjectCard key={p.id} title={p.title} desc={p.desc} stack={p.stack} link={p.link} delay={i * 180} />
+            <ProjectCard key={p.id} title={p.title} desc={p.desc} stack={p.stack} link={p.link} screenshots={p.screenshots} color={p.color} delay={i * 180} />
           ))}
         </div>
       </div>
