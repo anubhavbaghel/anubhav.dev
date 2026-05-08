@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function ProjectCard({ title, desc, stack = [], link, screenshots = [], delay = 0 }) {
+export default function ProjectCard({ title, desc, stack = [], link, delay = 0 }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -16,13 +16,11 @@ export default function ProjectCard({ title, desc, stack = [], link, screenshots
 
   return (
     <article className="project-card" style={cardStyle}>
-      {screenshots && screenshots.length ? (
-        <div className="project-card__screenshots" aria-hidden>
-          {screenshots.slice(0, 3).map((src, idx) => (
-            <img key={src} src={src} alt={`${title} screenshot ${idx + 1}`} style={{ width: 100 / Math.min(3, screenshots.length) + '%', objectFit: 'cover', borderRadius: 6, marginRight: idx < Math.min(2, screenshots.length - 1) ? 8 : 0 }} />
-          ))}
-        </div>
-      ) : null}
+      <div className="project-card__header-icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </div>
 
       <h4 className="project-card__title">{title}</h4>
       <p className="project-card__desc">{desc}</p>
