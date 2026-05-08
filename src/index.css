@@ -399,12 +399,147 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   to { width: 100% }
 }
 
-/* Welcome screen: full-viewport black overlay with rotating greetings */
-.welcome-screen { position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 9999; transition: transform 700ms cubic-bezier(0.22,0.9,0.36,1); transform: translateY(0%); will-change: transform }
+/* Windows 8.1 Lock Screen */
+.lock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 700ms cubic-bezier(0.22, 0.9, 0.36, 1);
+  transform: translateY(0%);
+  will-change: transform;
+  background: #000;
+}
+.lock-screen.is-hidden {
+  transform: translateY(-110%);
+  pointer-events: none;
+}
+.lock-screen.is-visible {
+  transform: translateY(0%);
+  pointer-events: auto;
+}
+.lock-screen__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 0;
+}
+.lock-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+.lock-screen__content {
+  position: absolute;
+  bottom: clamp(40px, 8vh, 80px);
+  left: clamp(40px, 6vw, 80px);
+  z-index: 2;
+  color: #fff;
+  font-family: 'Segoe UI', 'Neue Haas Display', system-ui, sans-serif;
+}
+.lock-screen__time {
+  margin: 0;
+  font-size: clamp(5rem, 10vw, 8rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.lock-screen__date {
+  margin: 10px 0 20px 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.2;
+}
+.lock-screen__status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+/* Full-screen welcome screen: Windows 8.1 lock-style */
+.welcome-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: transform 700ms cubic-bezier(0.22, 0.9, 0.36, 1);
+  transform: translateY(0);
+  will-change: transform;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .welcome-screen.is-hidden { transform: translateY(-110%); pointer-events: none }
-.welcome-screen.is-visible { transform: translateY(0%); pointer-events: auto }
-.welcome-inner { display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px }
-.welcome-text { color: #ffffff; font-weight: 400; line-height: 1; font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', system-ui, -apple-system, Roboto, Arial, sans-serif; letter-spacing: 0.6px; font-size: 3rem; transition: transform 220ms ease, opacity 180ms ease; will-change: transform, opacity }
+.welcome-screen.is-visible { transform: translateY(0); pointer-events: auto }
+
+.welcome-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.welcome-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: clamp(20px, 6vw, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: #fff;
+}
+
+/* Left: big time + date */
+.welcome-left {
+  position: fixed;
+  left: clamp(24px, 5vw, 60px);
+  bottom: clamp(28px, 6vh, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 3;
+  pointer-events: none; /* allow clicks to dismiss through the time area */
+}
+.welcome-time { font-size: clamp(3rem, 12vw, 8rem); font-weight: 300; line-height: 1; margin: 0; color: #fff; text-shadow: 0 6px 18px rgba(0,0,0,0.6) }
+.welcome-day { margin-top: 8px; font-size: clamp(1rem, 2.6vw, 1.6rem); font-weight: 400; opacity: 0.95; text-shadow: 0 4px 10px rgba(0,0,0,0.5) }
+
+/* Right: greeting and weather */
+.welcome-right {
+  position: fixed;
+  right: clamp(24px, 5vw, 60px);
+  bottom: clamp(28px, 6vh, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  text-align: right;
+  z-index: 3;
+  pointer-events: none; /* allow clicks to dismiss through the weather area */
+}
+.welcome-greeting { font-size: 1.6rem; font-weight: 500; opacity: 0.95; color: #fff }
+.welcome-temp { font-size: 2.25rem; font-weight: 600; background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; min-width: 120px; justify-content: center; color: #fff }
+
+@media (max-width: 720px) {
+  .welcome-inner { flex-direction: column; align-items: center; text-align: center; max-width: 100%; padding: 24px }
+  .welcome-left { align-items: center }
+  .welcome-right { align-items: center; text-align: center; flex-basis: auto }
+  .welcome-temp { min-width: auto; width: auto }
+}
 
 @keyframes blinkCaret {
   50% { border-color: transparent }

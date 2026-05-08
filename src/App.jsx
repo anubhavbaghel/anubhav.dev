@@ -80,7 +80,7 @@ export default function App() {
 
   return (
     <div className={`app-root ${projectsOpen ? 'projects-open' : ''} ${certificationsOpen ? 'certifications-open' : ''} ${noFlip ? 'no-flip' : ''}`}>
-      {showWelcome ? <WelcomeScreen autoDismissMs={2000} onFinish={handleWelcomeFinish} /> : null}
+      {showWelcome ? <WelcomeScreen onFinish={handleWelcomeFinish} /> : null}
       <div className="layout-outer" id="layoutOuter">
         <main className="main-area">
           {!projectsOpen && !certificationsOpen && (
