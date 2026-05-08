@@ -1,5 +1,4 @@
-import React from 'react'
-import ProjectCard from './ProjectCard'
+import React, { useState } from 'react'
 
 export default function ProjectsPage() {
   const goHome = () => { if (typeof window !== 'undefined') window.location.hash = '' }
@@ -49,23 +48,59 @@ export default function ProjectsPage() {
     }
   ]
 
+  const [activeProject, setActiveProject] = useState(projects[0])
+
   return (
     <div className="projects-page" role="main">
       <div className="projects-page__inner">
-        <div className="projects-page__header">
-          <button aria-label="Back home" onClick={goHome} className="projects-page__close">
-            <span aria-hidden="true">←</span> Home
-          </button>
-          <div>
-            <h1 className="projects-page__title">Projects</h1>
-            <p className="projects-page__subtitle">A collection of my recent work</p>
+        <div className="projects-page__sidebar">
+          <div className="projects-page__header">
+            <button aria-label="Back home" onClick={goHome} className="projects-page__close">
+              <span aria-hidden="true">←</span> Home
+            </button>
+            <div>
+              <h1 className="projects-page__title">Projects</h1>
+              <p className="projects-page__subtitle">A collection of my recent work</p>
+            </div>
           </div>
+          
+          <ul className="projects-page__list">
+            {projects.map(p => (
+              <li key={p.id}>
+                <button
+                  className={`projects-page__list-item ${activeProject.id === p.id ? 'is-active' : ''}`}
+                  onClick={() => setActiveProject(p)}
+                >
+                  {p.title}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="projects-page__grid">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} title={p.title} desc={p.desc} stack={p.stack} link={p.link} delay={i * 120} />
-          ))}
+        <div className="projects-page__showcase" key={activeProject.id}>
+          <div className="project-card__header-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+
+          <h2 className="project-showcase__title">{activeProject.title}</h2>
+          <p className="project-showcase__desc">{activeProject.desc}</p>
+
+          <div className="project-card__tags" aria-label="Tech stack">
+            {activeProject.stack.map(tech => (
+              <span key={tech} className="project-card__tag">{tech}</span>
+            ))}
+          </div>
+
+          <div className="project-showcase__footer">
+            {activeProject.link ? (
+              <a href={activeProject.link} target="_blank" rel="noopener noreferrer" className="project-card__link">View project</a>
+            ) : (
+              <span className="project-card__muted">Private repository</span>
+            )}
+          </div>
         </div>
       </div>
     </div>

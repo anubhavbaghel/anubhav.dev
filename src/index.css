@@ -62,7 +62,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .app-header h1 { margin: 0; font-size: 1.1rem; color: #fff; font-weight: 600 }
 
 /* Metro-style tiles container: use four column sections (row on desktop, stacked on mobile) */
-.tiles-layout { display: flex; gap: var(--tile-gap); padding: var(--tiles-padding) 0; height: 100%; min-width: 1200px; }
+.tiles-layout { display: flex; gap: var(--tile-gap); padding: var(--tiles-padding); height: 100%; min-width: 1200px; }
 .tiles-column { display: flex; flex-direction: column; gap: var(--tile-gap); min-height: 100% }
 .tiles-column.left-column { flex: 2; min-height: 50vh }
 .tiles-column.middle-column, .tiles-column.right-column { flex: 1 }
@@ -529,17 +529,65 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   width: 100%;
   min-height: 100%;
   margin: 0 auto;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 18px;
-  padding: 0 20px 40px 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding: 0 20px 0px 20px;
 }
+
+@media (max-width: 900px) {
+  .projects-page__inner {
+    flex-direction: column;
+  }
+}
+
+.projects-page__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 0 0 20%;
+  min-width: 260px;
+}
+
+.projects-page__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.projects-page__list-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.projects-page__list-item:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+  transform: translateX(4px);
+}
+.projects-page__list-item.is-active {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  font-weight: 600;
+}
+
 .projects-page__header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
-  margin-bottom: 16px;
 }
 .projects-page__title {
   margin: 0;
@@ -548,13 +596,74 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   line-height: 1;
   color: rgba(255,255,255,0.92);
 }
-.projects-page__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: minmax(360px, calc(100vh - 180px)); /* ensures only 1 row fits the screen, pushing the rest below */
-  gap: 14px;
-  min-height: 0;
-  align-items: stretch;
+
+.projects-page__subtitle {
+  margin: 8px 0 0 0;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 400;
+}
+
+@keyframes showcaseFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.projects-page__showcase {
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(25, 30, 38, 0.8) 0%, rgba(12, 14, 18, 0.9) 100%);
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  min-height: 75vh;
+  flex: 1;
+  min-width: 0; /* prevents flex child from expanding beyond container width */
+  animation: showcaseFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (max-width: 900px) {
+  .projects-page__showcase {
+    height: auto;
+    min-height: 60vh;
+    align-self: stretch;
+  }
+}
+
+.projects-page__showcase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sky-mid), var(--sky-bottom));
+}
+.project-showcase__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.project-showcase__desc {
+  margin: 24px 0 0 0;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  font-weight: 400;
+  font-size: 1.15rem;
+  max-width: 800px;
+}
+.project-showcase__footer {
+  margin-top: auto;
+  padding-top: 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .project-card {
