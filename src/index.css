@@ -1,7 +1,7 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
-:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32 }
+:root { --bg: #ffffff; --muted: #9aa4b2; --tile-gap: 12px; --tiles-padding: 20px ; --sky-top: #9fd7ff; --sky-mid: #7ec0ff; --sky-bottom: #a6e6ff; --sun: #ffd76b; --mountain: #6b7ca3; --hill: #4f8a3b; --grass: #2e7d32 }
 * { box-sizing: border-box }
 /* Host Grotesk local font (extracted from Host_Grotesk.zip into public/fonts/) */
 @font-face {
@@ -75,7 +75,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 /* Desktop: ensure the About/dashboard tile is visually prominent */
 @media (max-width: 721px) {
-  .tiles-column.left-column { min-height: 50vh !important; }
+  .tiles-column.left-column { min-height: 60vh !important; }
 }
 
 
@@ -489,6 +489,60 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%);
   z-index: 1;
   pointer-events: none;
+}
+
+.welcome-center {
+  /* place the smiley + greeting at the right-bottom above the welcome text */
+  position: fixed;
+  right: clamp(24px, 5vw, 60px);
+  bottom: clamp(120px, 18vh, 160px);
+  transform: none;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 6px;
+}
+.smiley svg { width: clamp(96px, 22vw, 180px); height: auto; display: block; overflow: visible }
+
+/* ensure the smiley itself is right-aligned inside the welcome container */
+.smiley { align-self: flex-end }
+
+/* Smiley features only (transparent background) */
+.smiley .face-outline { display: none }
+.smiley .eye { fill: #fff; transition: opacity 160ms linear; }
+.smiley .eye.left { opacity: 1 }
+.smiley .eye.right { opacity: 1; animation: eyeRightToggle 4s infinite linear; }
+.smiley .wink-line { stroke: #fff; stroke-width: 4; stroke-linecap: round; fill: none; opacity: 0; animation: winkLine 4s infinite linear; }
+.smiley .mouth { stroke: #fff; stroke-width: 5; stroke-linecap: round; fill: none }
+
+.hello-center { position: static; display: block; font-size: clamp(1rem, 2.4vw, 1.4rem); font-weight: 600; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5); text-align: center; margin: 0 }
+.hello-center .hello-smile,
+.hello-center .hello-wink { position: static; display: block; transition: opacity 160ms linear }
+.hello-center .hello-smile { opacity: 1; animation: helloShow 4s infinite linear }
+.hello-center .hello-wink { opacity: 0; animation: helloWink 4s infinite linear }
+
+@keyframes eyeRightToggle {
+  0%, 69.99%, 100% { opacity: 1 }
+  70%, 84.99% { opacity: 0 }
+}
+
+@keyframes winkLine {
+  0%, 69.99%, 100% { opacity: 0 }
+  70%, 84.99% { opacity: 1 }
+}
+
+@keyframes helloShow {
+  0%, 69.99%, 100% { opacity: 1 }
+  70%, 84.99% { opacity: 0 }
+}
+
+@keyframes helloWink {
+  0%, 69.99%, 100% { opacity: 0 }
+  70%, 84.99% { opacity: 1 }
 }
 
 .welcome-inner {
@@ -1213,7 +1267,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 /* Mobile (phone) responsiveness: Windows Phone-style vertical mosaic */
 @media (max-width: 720px) {
-  :root { --tile-gap: 10px; --tiles-padding: 12px }
+  :root { --tile-gap: 10px; --tiles-padding: 12px 10px }
 
   /* Mobile: vertical mosaic single-column flow */
   /* Use a single-column flow on small screens */
@@ -1243,7 +1297,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
    .tiles-column.middle-column .tiles-column-inner { display: flex; flex-direction: column; gap: var(--tile-gap); }
 
   /* Top-right nested skills: present as a 2x2 grid (two columns, two rows) with a scroll cap */
-  .nested-grid.top-right { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: var(--tile-gap); width: 100%; max-height: 60vh; overflow: auto; }
+  .nested-grid.top-right { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: var(--tile-gap); width: 100%; min-height: 20vh; overflow: auto; }
   .nested-grid.top-right .tile { aspect-ratio: auto; height: auto; }
 
    /* Hide other nested-grid sections for now to keep focus on skills */

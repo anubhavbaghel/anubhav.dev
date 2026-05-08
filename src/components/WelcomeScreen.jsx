@@ -82,6 +82,20 @@ export default function WelcomeScreen({ autoDismissMs = 5000, onFinish }) {
       onClick={startDismiss}
     >
       <div className="welcome-overlay" />
+      <div className="welcome-center" onClick={(e) => { e.stopPropagation(); startDismiss(); }} role="button" aria-label="Winking smiley. Click to continue.">
+        <div className="smiley" aria-hidden="true" style={{ alignSelf: 'flex-end' }}>
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+            {/* no filled background per request; only facial features */}
+            <g className="face" fill="none" stroke="none">
+              <circle className="face-outline" cx="60" cy="60" r="54" fill="none" />
+              <circle className="eye left" cx="44" cy="50" r="6" fill="#fff" />
+              <circle className="eye right" cx="76" cy="50" r="6" fill="#fff" />
+              <path className="wink-line" d="M70 50c6 0 10 0 14 0" stroke="#fff" strokeWidth="4" strokeLinecap="round" fill="none" opacity="0" />
+              <path className="mouth" d="M42 78c12 10 26 10 36 0" stroke="#fff" strokeWidth="5" strokeLinecap="round" fill="none" />
+            </g>
+          </svg>
+        </div>
+      </div>
       <div className="welcome-inner" onClick={(e) => e.stopPropagation()}>
         <div className="welcome-left">
           <div className="welcome-time">{timeStr}</div>
