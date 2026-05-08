@@ -16,12 +16,6 @@ export default function ProjectCard({ title, desc, stack = [], link, delay = 0 }
 
   return (
     <article className="project-card" style={cardStyle}>
-      <div className="project-card__header-icon" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-        </svg>
-      </div>
-
       <h4 className="project-card__title">{title}</h4>
       <p className="project-card__desc">{desc}</p>
 

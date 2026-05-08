@@ -718,16 +718,41 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   margin-top: 24px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 .project-showcase__tag {
-  padding: 6px 12px;
-  background: rgba(255,255,255,0.04);
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.8);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.project-showcase__tag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: background 0.2s ease;
+}
+.project-showcase__tag:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.project-showcase__tag:hover::before {
+  background: var(--sky-bottom);
 }
 .project-showcase__footer {
   margin-top: auto;
@@ -795,25 +820,6 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 }
 .project-card:hover::before {
   opacity: 1;
-}
-.project-card__header-icon {
-  margin-bottom: 24px;
-  width: 52px;
-  height: 52px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--sky-bottom);
-  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.project-card:hover .project-card__header-icon {
-  transform: translateY(-4px) scale(1.05);
-  background: rgba(166, 230, 255, 0.1);
-  border-color: rgba(166, 230, 255, 0.3);
-  color: #fff;
 }
 .project-card__title {
   margin: 0;
