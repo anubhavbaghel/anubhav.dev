@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function ProjectCard({ title, desc, stack = [], link, delay = 0 }) {
+export default function ProjectCard({ title, desc, stack = [], link, screenshots = [], delay = 0 }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -16,6 +16,14 @@ export default function ProjectCard({ title, desc, stack = [], link, delay = 0 }
 
   return (
     <article className="project-card" style={cardStyle}>
+      {screenshots && screenshots.length ? (
+        <div className="project-card__screenshots" aria-hidden>
+          {screenshots.slice(0, 3).map((src, idx) => (
+            <img key={src} src={src} alt={`${title} screenshot ${idx + 1}`} style={{ width: 100 / Math.min(3, screenshots.length) + '%', objectFit: 'cover', borderRadius: 6, marginRight: idx < Math.min(2, screenshots.length - 1) ? 8 : 0 }} />
+          ))}
+        </div>
+      ) : null}
+
       <h4 className="project-card__title">{title}</h4>
       <p className="project-card__desc">{desc}</p>
 

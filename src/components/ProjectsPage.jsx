@@ -10,14 +10,48 @@ export default function ProjectsPage() {
       title: 'What is happening in my City',
       desc: 'City discovery app that combines nearby events, places, and map-based browsing with location-aware hooks.',
       stack: ['React', 'Maps API', 'Serverless API' , 'Vercel'],
-      link: 'https://github.com/anubhavbaghel/WhatIsHappeningInMyCity'
+      link: 'https://github.com/anubhavbaghel/WhatIsHappeningInMyCity',
+      screenshots: []
     },
     {
       id: 'p2',
       title: 'Hydra App',
       desc: 'A product-focused app experience built with modern frontend workflows and responsive interaction patterns.',
       stack: ['React-Native', 'Frontend', 'Expo' , 'Responsive UI', 'Android'],
-      link: 'https://github.com/anubhavbaghel/hydra'
+      link: 'https://github.com/anubhavbaghel/hydra',
+      screenshots: []
+    },
+    {
+      id: 'p3',
+      title: 'Flydheera',
+      desc: 'Portfolio / studio site for Flydheera — clean visual design, responsive layout and case-study pages.',
+      stack: ['Next.js', 'React', 'Vercel', 'CSS'],
+      link: 'https://flydheera.com/',
+      screenshots: ['/assets/projects/flydheera-1.svg', '/assets/projects/flydheera-2.svg']
+    },
+    {
+      id: 'p4',
+      title: 'Purava Bath',
+      desc: 'E-commerce / brand site for Purava Bath showcasing products with rich imagery and product pages.',
+      stack: ['Next.js', 'Shopify', 'React', 'Tailwind'],
+      link: 'https://puravabath.com/',
+      screenshots: ['/assets/projects/puravabath-1.svg', '/assets/projects/puravabath-2.svg']
+    },
+    {
+      id: 'p5',
+      title: 'WDC Design',
+      desc: 'Design and portfolio site for WDC Design — showcases case studies and service pages.',
+      stack: ['Gatsby', 'React', 'Netlify', 'SCSS'],
+      link: 'https://wdc-design-2.vercel.app/',
+      screenshots: ['/assets/projects/wdc-1.svg']
+    },
+    {
+      id: 'p6',
+      title: 'GitHub User Explore',
+      desc: 'An exploration app for GitHub users and repositories with search, filters and lightweight analytics.',
+      stack: ['React', 'Vite', 'GitHub API', 'Vercel'],
+      link: 'https://github-user-explore-mocha.vercel.app/',
+      screenshots: ['/assets/projects/github-explore-1.svg']
     }
   ]
 
