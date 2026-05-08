@@ -1,5 +1,4 @@
-import React from 'react'
-import ProjectCard from './ProjectCard'
+import React, { useState } from 'react'
 
 export default function ProjectsPage() {
   const goHome = () => { if (typeof window !== 'undefined') window.location.hash = '' }
@@ -10,7 +9,7 @@ export default function ProjectsPage() {
       title: 'What is happening in my City',
       desc: 'City discovery app that combines nearby events, places, and map-based browsing with location-aware hooks.',
       stack: ['React', 'Maps API', 'Serverless API' , 'Vercel'],
-      link: 'https://github.com/anubhavbaghel/WhatIsHappeningInMyCity'
+      link: 'https://whatishappeninginmycity.vercel.app/'
     },
     {
       id: 'p2',
@@ -18,21 +17,99 @@ export default function ProjectsPage() {
       desc: 'A product-focused app experience built with modern frontend workflows and responsive interaction patterns.',
       stack: ['React-Native', 'Frontend', 'Expo' , 'Responsive UI', 'Android'],
       link: 'https://github.com/anubhavbaghel/hydra'
+    },
+    {
+      id: 'p3',
+      title: 'Flydheera',
+      desc: 'Portfolio / studio site for Flydheera — clean visual design, responsive layout and case-study pages.',
+      stack: ['Next.js', 'React', 'Vercel', 'CSS'],
+      link: 'https://flydheera.com/'
+    },
+    {
+      id: 'p4',
+      title: 'Purava Bath',
+      desc: 'E-commerce / brand site for Purava Bath showcasing products with rich imagery and product pages.',
+      stack: ['Next.js', 'Shopify', 'React', 'Tailwind'],
+      link: 'https://puravabath.com/'
+    },
+    {
+      id: 'p5',
+      title: 'WDC Design',
+      desc: 'Design and portfolio site for WDC Design — showcases case studies and service pages.',
+      stack: ['Gatsby', 'React', 'Netlify', 'SCSS'],
+      link: 'https://wdc-design-2.vercel.app/'
+    },
+    {
+      id: 'p6',
+      title: 'GitHub User Explore',
+      desc: 'An exploration app for GitHub users and repositories with search, filters and lightweight analytics.',
+      stack: ['React', 'Vite', 'GitHub API', 'Vercel'],
+      link: 'https://github-user-explore-mocha.vercel.app/'
     }
   ]
+
+  const [activeProject, setActiveProject] = useState(projects[0])
 
   return (
     <div className="projects-page" role="main">
       <div className="projects-page__inner">
-        <div className="projects-page__header">
-          <button aria-label="Back home" onClick={goHome} className="projects-page__close">←</button>
-          <span className="projects-page__title">Projects</span>
+        <div className="projects-page__sidebar">
+          <div className="projects-page__header">
+            <button aria-label="Back home" onClick={goHome} className="projects-page__close">
+              <span aria-hidden="true">←</span> Home
+            </button>
+            <div>
+              <h1 className="projects-page__title">Projects</h1>
+              <p className="projects-page__subtitle">A collection of my recent work</p>
+            </div>
+          </div>
+          
+          <ul className="projects-page__list">
+            {projects.map(p => (
+              <li key={p.id}>
+                <button
+                  className={`projects-page__list-item ${activeProject.id === p.id ? 'is-active' : ''}`}
+                  onClick={() => setActiveProject(p)}
+                >
+                  {p.title}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="projects-page__grid">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} title={p.title} desc={p.desc} stack={p.stack} link={p.link} delay={i * 180} />
-          ))}
+        <div className="projects-page__showcase" key={activeProject.id}>
+          <div className="project-showcase__info">
+            <h2 className="project-showcase__title">{activeProject.title}</h2>
+            <p className="project-showcase__desc">{activeProject.desc}</p>
+
+            <div className="project-showcase__tags" aria-label="Tech stack">
+              {activeProject.stack.map(tech => (
+                <span key={tech} className="project-showcase__tag">{tech}</span>
+              ))}
+            </div>
+
+            <div className="project-showcase__footer">
+              {activeProject.link ? (
+                <a href={activeProject.link} target="_blank" rel="noopener noreferrer" className="project-showcase__link">View live project</a>
+              ) : (
+                <span className="project-card__muted">Private repository</span>
+              )}
+            </div>
+          </div>
+
+          {activeProject.link && (
+            <div className="project-showcase__browser">
+              <div className="browser-header">
+                <span className="browser-dot red"></span>
+                <span className="browser-dot yellow"></span>
+                <span className="browser-dot green"></span>
+              </div>
+              <div className="browser-iframe-wrapper">
+                <iframe src={activeProject.link} title={`${activeProject.title} live preview`} className="browser-iframe" loading="lazy" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
