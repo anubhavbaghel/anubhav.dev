@@ -523,15 +523,17 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
   color: #fff;
   z-index: 100001;
   padding: clamp(20px, 3vw, 40px);
+  overflow-y: auto;
 }
 .projects-page__inner {
   max-width: 1240px;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 18px;
+  padding-bottom: 40px;
 }
 .projects-page__header {
   display: flex;
@@ -548,6 +550,7 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .projects-page__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(360px, calc(100vh - 180px)); /* ensures only 1 row fits the screen, pushing the rest below */
   gap: 14px;
   min-height: 0;
   align-items: stretch;
@@ -614,7 +617,10 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 .projects-list__item { margin: 8px 0 }
 
 @media (max-width: 900px) {
-  .projects-page__grid { grid-template-columns: 1fr; }
+  .projects-page__grid { 
+    grid-template-columns: 1fr; 
+    grid-auto-rows: auto;
+  }
 }
 
 /* Certifications page */
@@ -847,5 +853,3 @@ body { font-family: 'Neue Haas Display', 'Host Grotesk', 'Poppins', 'Segoe UI', 
 
 /* Removed previous global mobile override that conflicted with the two-column dashboard layout.
    Layout for mobile is controlled in the earlier @media (max-width: 720px) block above. */
-
-
