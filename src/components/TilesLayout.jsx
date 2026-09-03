@@ -134,7 +134,7 @@ export default function TilesLayout({
                 fontSize: "1.5rem",
               }}
             >
-              Frontend Developer who turns ideas into clean and functional web
+              Web Developer who turns ideas into clean, fast, and functional web
               interfaces.
             </div>
           </div>
